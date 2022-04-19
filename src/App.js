@@ -7,7 +7,7 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Meeting Manager Admin Dashboard
+          Meeting Manager Admin's Dashboard
         </p>
         <a
           className="App-link"
