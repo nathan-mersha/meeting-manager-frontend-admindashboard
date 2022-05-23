@@ -1,9 +1,14 @@
-
+import Home from "./container/Home";
+import { Routes, Route,  } from "react-router-dom";
 function App() {
   return (
-    <div className=" m-auto ">
-      <h1>Hello, world!</h1>
-    </div>
+    <div className="App">
+    <Routes>
+       <Route path="/" element={<Home />} />
+       <Route path="/category/:categoryId" element={<Home />} />
+     </Routes>
+     
+     </div>
   );
 }
 
