@@ -13,7 +13,7 @@ import NavItem from "./NavItem";
 const isNotActiveStyle =
   "flex items-center px-5 gap-3 text-white  transition-all duration-200 ease-in-out capitalize ";
 const isActiveStyle =
-  "flex items-center pl-5 gap-3 text-blue-500   font-extrabold border-r-2 border-black  transition-all duration-200 ease-in-out capitalize";
+  "flex items-center pl-5 gap-3 text-blue-500   font-extrabold border-r-2 border-white  transition-all duration-200 ease-in-out capitalize";
 
 const Sidebar = ({ closeToggle }) => {
   const { categoryId } = useParams();
