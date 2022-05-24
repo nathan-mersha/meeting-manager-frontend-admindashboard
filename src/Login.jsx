@@ -1,11 +1,15 @@
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {  useForm } from 'react-hook-form'
 import useAuth from './hooks/useAuth';
-
+import { FiLogIn } from 'react-icons/fi';
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
+const  navigate = useNavigate();
   const [login, setLogin] = useState(false)
+  const [email, setEmail] = useState(null)
+  const [password, setPassword] = useState(null)
   const { signIn, signUp } = useAuth()
   const {
     register,
@@ -16,27 +20,50 @@ function Login() {
 
   const onSubmit = async (data) => {
     if (login) {
-      await signIn(data.email, data.password)
+       await signIn(data.email, data.password)
     } else {
-      await signUp(data.email, data.password)
+      // await signUp(data.email, data.password)
     }
   }
+const  forgotPassword = ()=>{
+  navigate('/ForgotPassword');
+};
+useEffect(() => {
+    
+  setEmail(watch('email'));
+  setPassword(watch('password'));
 
+  return () => {
+    return null;
+  }
+}, [watch('email'),watch('password')]);
   return (
-    <div className="relative flex h-screen w-screen flex-col md:items-center md:justify-center md:bg-transparent">
+    <div className=" flex h-screen w-screen flex-col md:items-center md:justify-center md:bg-transparent">
      
      
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className=" relative mt-24 space-y-8 rounded  py-10 px-6 md:mt-0 md:max-w-md md:px-14"
+        className="  mt-24 space-y-8 rounded  py-10 px-6 md:mt-0 md:max-w-md md:px-14"
       >
-          <img
-        src="https://rb.gy/ulxxee"
-        className="absolute left-4 top-4 cursor-pointer object-contain md:left-10 md:top-6"
+        <div className='flex items-center justify-center'>
+
+        <img
+        src="https://www.carlogos.org/logo/MG-logo-red-2010-1920x1080.png"
+        className=" cursor-pointer object-contain md:left-10 md:top-6"
         width={150}
+        alt="sa"
         height={150}
       />
-        <h1 className=" text-4xl font-semibold">Sign In</h1>
+        </div>
+   
+      <div className='flex flex-col items-end'>
+        <div className='bg-blue-500 w-40 h-2 rounded-xl'></div>
+      <h1 className=" text-2xl  font-bold">Arrange control board</h1>
+      </div>
+      <div className='space-y-1'>
+    <h1 className=" text-xl font-semibold ">Log In</h1>
+    <div className='bg-blue-500 w-10 h-1 rounded-xl'></div>
+    </div>
         <div className="space-y-4">
           <label className="inline-block w-full">
             <input
@@ -66,23 +93,30 @@ function Login() {
             )}
           </label>
         </div>
+        <div className='flex items-center justify-between'>
         <button
-          className=" w-full rounded bg-[#e50914] py-3 font-semibold"
+            type="submit"
+          className={` flex items-center justify-between rounded-2xl ${email && password ?"bg-blue-500":"bg-amber-700"} p-3 text-white font-semibold`}
           onClick={() => setLogin(true)}
         >
-          Sign In
+          <FiLogIn className="text-white w-5 h-5 mx-2"/>
+          Login
         </button>
-        <div className="text-[gray]">
-          New to Netflix?{' '}
+
+        <div className="text-[gray] pl-4 ">
+         
           <button
-            type="submit"
-            className="text-white hover:underline"
-            onClick={() => setLogin(false)}
+            className="text-blue-800 hover:underline"
+            onClick={() => forgotPassword()}
           >
             {' '}
-            Sign up now
+            Forgot Password?
           </button>
         </div>
+
+        </div>
+      
+       
       </form>
     </div>
   )

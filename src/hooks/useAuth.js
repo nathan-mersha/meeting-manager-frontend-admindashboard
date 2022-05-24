@@ -1,7 +1,6 @@
-
-
-import { createContext, useContext, useEffect, useMemo, useState } from 'react'
-import { useNavigate } from 'react-router-dom';
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { fetchUser } from "../utils/fetchUser";
 
 const AuthContext = createContext({
   user: null,
@@ -10,29 +9,32 @@ const AuthContext = createContext({
   logout: async () => {},
   error: null,
   loading: false,
-})
-
+});
 
 export const AuthProvider = ({ children }) => {
-//   const router = useRouter()
-const  navigate = useNavigate();
-  const [user, setUser] = useState(null)
-  const [error, setError] = useState(null)
-  const [initialLoading, setInitialLoading] = useState(false)
-  const [loading, setLoading] = useState(false)
-//   useEffect(
-//     ()=>{
+  //   const router = useRouter()
+  const homeUrl = "https://mmserver.ml/";
+  const navigate = useNavigate();
+  const [user, setUser] = useState(null);
+  const [error, setError] = useState(null);
+  const [initialLoading, setInitialLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    const user = fetchUser();
+    setInitialLoading(false);
+    if (!user) {
+      navigate("/login", { replace: true });
+    } else {
+      navigate("/", { replace: true });
+    }
+  }, [fetchUser()]);
 
-//     }      
-      
-//       ),
-//     []
-//   );
-
-  const signUp =  (email, password) => {
+  const signUp = (email, password) => {
     setLoading(true);
 
-    navigate('/',{ replace: true });
+    navigate("/", { replace: true });
+    // localStorage.setItem('user' ,JSON.stringify(response.profileObj));
+
     // await createUserWithEmailAndPassword(auth, email, password)
     //   .then((userCredential) => {
     //     setUser(userCredential.user)
@@ -41,42 +43,116 @@ const  navigate = useNavigate();
     //   })
     //   .catch((error) => alert(error.message))
     //   .finally(() => setLoading(false))
- 
-    }
-  const signIn =  (email, password) => {
+  };
+  const forgotPassword = async (email) => {
     setLoading(true);
-    navigate('/',{ replace: true });
+    const requestOptions = {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ email: email }),
+    };
+    await fetch(homeUrl + "server/user/forgot_password", requestOptions)
+      .then(async (response) => {
+        const json = await response.json();
+        console.log(json);
+        if (json["message"]) {
+          navigate("/EnterCode", { state: { email } });
+        } else {
+          console.log(json);
+
+          alert(json["detail"]);
+        }
+      })
+      .catch((error) => alert(error.message))
+      .finally(() => setLoading(false));
+  };
+  const enterCodeAndChangePassword = async (email, code, newPassword) => {
+    setLoading(true);
+    const requestOptions = {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({
+        email: email,
+        reset_code: code,
+        new_password: newPassword,
+      }),
+    };
+    await fetch(homeUrl + "server/user/reset_password", requestOptions)
+      .then(async (response) => {
+        const json = await response.json();
+        console.log(json);
+        if (json["message"]) {
+          navigate("/Login");
+        } else {
+          console.log(json);
+
+          alert(json["detail"]);
+          setLoading(false);
+        }
+      })
+
+      .catch((error) => alert(error.message))
+      .finally(() => setLoading(false));
+  };
+  const signIn = async (email, password) => {
+    setLoading(true);
+    const requestOptions = {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ emailOrPhoneNumber: email, password: password }),
+    };
+    const response = await fetch(
+      homeUrl + "server/user/login",
+      requestOptions
+    )
     
-    // await signInWithEmailAndPassword(auth, email, password)
-    //   .then((userCredential) => {
-    //     setUser(userCredential.user)
-    //     router.push('/')
-    //     setLoading(false)
-    //   })
-    //   .catch((error) => alert(error.message))
-    //   .finally(() => setLoading(false))
-  }
+    .then(async (response) => {
+      const json = await response.json();
+      console.log(json);
+      if (json["token"]) {
+        localStorage.setItem("user", JSON.stringify(json["token"]));
+        setUser(json["user"]);
+        navigate("/", { replace: true });
+      } else {
+        console.log(json);
+  
+        alert(json["detail"]);
+      }
+    })
+
+    .catch((error) => alert(error.message))
+    .finally(() => setLoading(false));
+
+   
+  };
   const logout = async () => {
-    setLoading(true)
-    // await signOut(auth)
-    //   .then(() => {
-    //     setUser(null)
-    //   })
-    //   .catch((error) => alert(error.message))
-    //   .finally(() => setLoading(false))
-  }
+    setLoading(true);
+    localStorage.clear();
+    setLoading(false);
+
+  
+  };
   const memoedValue = useMemo(
-    () => ({ user, signUp, signIn, error, loading, logout }),
+    () => ({
+      user,
+      signUp,
+      signIn,
+      error,
+      loading,
+      logout,
+      forgotPassword,
+      enterCodeAndChangePassword,
+    }),
     [user, loading, error]
-  )
+  );
   return (
     <AuthContext.Provider value={memoedValue}>
       {!initialLoading && children}
     </AuthContext.Provider>
-  )
-}
+  );
+};
 // Let's only export the `useAuth` hook instead of the context.
 // We only want to use the hook directly and never the context comopnent.
 export default function useAuth() {
-  return useContext(AuthContext)
+  return useContext(AuthContext);
 }

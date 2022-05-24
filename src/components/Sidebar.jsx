@@ -9,6 +9,7 @@ import { FaLanguage} from "react-icons/fa";
 import { FaUsers} from "react-icons/fa";
 import { FaUserEdit} from "react-icons/fa";
 import NavItem from "./NavItem";
+import useAuth from "../hooks/useAuth";
 
 const isNotActiveStyle =
   "flex items-center px-5 gap-3 text-white  transition-all duration-200 ease-in-out capitalize ";
@@ -17,6 +18,8 @@ const isActiveStyle =
 
 const Sidebar = ({ closeToggle }) => {
   const { categoryId } = useParams();
+  const { logout} = useAuth();
+
   const handelCloseSidebar = () => {
     if (closeToggle) {
       closeToggle(false);
@@ -46,7 +49,7 @@ const Sidebar = ({ closeToggle }) => {
           />
           <p className="text-white">michael andom</p>
 
-          <div>
+          <div onClick={()=> { logout();}}>
             <h4 className=" text-xs underline text-white">Logout</h4>
           </div>
         </Link>
