@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { fetchUser } from "../utils/fetchUser";
+import { fetchToken, fetchUser } from "../utils/fetchUser";
 
 const AuthContext = createContext({
   user: null,
@@ -20,14 +20,16 @@ export const AuthProvider = ({ children }) => {
   const [initialLoading, setInitialLoading] = useState(true);
   const [loading, setLoading] = useState(false);
   useEffect(() => {
+    const token = fetchToken();
     const user = fetchUser();
     setInitialLoading(false);
-    if (!user) {
+    if (!user && !token) {
       navigate("/login", { replace: true });
     } else {
+      setUser(user);
       navigate("/", { replace: true });
     }
-  }, [fetchUser()]);
+  }, [fetchToken()]);
 
   const signUp = (email, password) => {
     setLoading(true);
@@ -107,9 +109,10 @@ export const AuthProvider = ({ children }) => {
     
     .then(async (response) => {
       const json = await response.json();
-      console.log(json);
+      
       if (json["token"]) {
-        localStorage.setItem("user", JSON.stringify(json["token"]));
+        localStorage.setItem("token", JSON.stringify(json["token"]));
+        localStorage.setItem("user", JSON.stringify(json["user"]));
         setUser(json["user"]);
         navigate("/", { replace: true });
       } else {

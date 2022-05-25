@@ -18,7 +18,7 @@ const isActiveStyle =
 
 const Sidebar = ({ closeToggle }) => {
   const { categoryId } = useParams();
-  const { logout} = useAuth();
+  const { logout ,user} = useAuth();
 
   const handelCloseSidebar = () => {
     if (closeToggle) {
@@ -47,7 +47,7 @@ const Sidebar = ({ closeToggle }) => {
             alt="user"
             className="w-10 h-10 rounded-full"
           />
-          <p className="text-white">michael andom</p>
+          <p className="text-white">{user.firstName} {user.lastName}</p>
 
           <div onClick={()=> { logout();}}>
             <h4 className=" text-xs underline text-white">Logout</h4>
