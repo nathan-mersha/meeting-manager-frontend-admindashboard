@@ -10,7 +10,7 @@ const  navigate = useNavigate();
   const [login, setLogin] = useState(false)
   const [email, setEmail] = useState(null)
   const [password, setPassword] = useState(null)
-  const { signIn, signUp } = useAuth()
+  const { signIn } = useAuth()
   const {
     register,
     handleSubmit,
