@@ -70,11 +70,11 @@ export const AuthProvider = ({ children }) => {
     setLoading(true);
     const requestOptions = {
       method: "POST",
-      headers: { "content-type": "application/json" },
+      headers: { "content-type": "application/json" ,"accept": "application/json"},
       body: JSON.stringify({
         email: email,
         reset_code: code,
-        new_password: newPassword,
+        new_password: newPassword
       }),
     };
     await fetch(homeUrl + "server/user/reset_password", requestOptions)
@@ -87,7 +87,6 @@ export const AuthProvider = ({ children }) => {
           console.log(json);
 
           alert(json["detail"]);
-          setLoading(false);
         }
       })
 
@@ -152,7 +151,7 @@ export const AuthProvider = ({ children }) => {
   );
 };
 // Let's only export the `useAuth` hook instead of the context.
-// We only want to use the hook directly and never the context comopnent.
+// We only want to use the hook directly and never the context component.
 export default function useAuth() {
   return useContext(AuthContext);
 }

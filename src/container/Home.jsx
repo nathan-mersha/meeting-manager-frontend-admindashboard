@@ -3,6 +3,7 @@ import { HiMenu } from "react-icons/hi";
 import { AiFillCloseCircle } from "react-icons/ai";
 import { Sidebar } from "../components";
 import { useParams } from "react-router-dom";
+import ArrangeUser from "../components/ArrangeUser";
 
 function Home() {
     const isMount=useRef();
@@ -19,6 +20,8 @@ function Home() {
     scrollRef.current.scrollTo(0, 0);
     isMount.current=true;
   }, []);
+
+
 
   return (
     <div className='flex bg-gray-50  flex-col md:flex-row h-screen transition-height duration-75 ease-out'>
@@ -57,8 +60,55 @@ function Home() {
       )}
     </div>
     <div className='pb-2 flex-1 h-screen overflow-y-scroll' ref={scrollRef}>
+      {categoryData && (() => {
+        if (categoryData==="ArrangeUser") {
+          return (
+            <ArrangeUser />
+          )
+        } else if (categoryData==="NationalCalendars") {
+          return (
+            <div>NationalCalendars</div>
+          )
+        }else if (categoryData==="PromoCode") {
+          return (
+            <div>PromoCode</div>
+          )
+        } else if (categoryData==="MembershipLevels") {
+          return (
+            <div>MembershipLevels</div>
+          )
+        } else if (categoryData==="PlatformLanguages") {
+          return (
+            <div>PlatformLanguages</div>
+          )
+        } else if (categoryData==="UserAgreements") {
+          return (
+            <div>UserAgreements</div>
+          )
+        }else if (categoryData==="SystemUsers") {
+          return (
+            <div>SystemUsers</div>
+          )
+        }else if (categoryData==="MyAccount") {
+          return (
+            <div>MyAccount</div>
+          )
+        } else {
+          return (
+            <div>catch all 404</div>
+          )
+        }
+      })()
+      
+      }
+    
  
-      <div>body of {categoryData ? categoryData :"home"}</div>
+     {
+      !categoryData && <div>body of home</div>
+     }
+ 
+ 
+ 
     </div>
   </div>
   )

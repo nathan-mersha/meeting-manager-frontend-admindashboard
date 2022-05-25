@@ -1,10 +1,20 @@
+
+
 import Home from "./container/Home";
 import { Routes, Route,  } from "react-router-dom";
 import Login from "./Login";
 import ForgotPassword from "./ForgotPassword";
 import EnterCode from "./EnterCode";
 import ChangePassword from "./ChangePassword";
+import { useRecoilState } from "recoil";
+import { modalState, modalTypeState } from "./atoms/modalAtom";
+import { getDataState } from "./atoms/postAtom";
+import { AnimatePresence } from "framer-motion";
+import Modal from "./components/modal/Model";
 function App() {
+  const [modalOpen, setModalOpen] = useRecoilState(modalState);
+  const [modalType, setModalType] = useRecoilState(modalTypeState);
+  const [postState, setPostState] = useRecoilState(getDataState);
   return (
     <div className="App">
     <Routes>
@@ -14,9 +24,18 @@ function App() {
        <Route path="/EnterCode" element={<EnterCode />} />
        <Route path="/ChangePassword" element={<ChangePassword />} />
   
-       <Route path="/category/:categoryId" element={<Home />} />
+       <Route path="/:categoryId" element={<Home />} />
      </Routes>
-     
+     <AnimatePresence>
+          {modalOpen && (
+            <Modal handleClose={() => {
+              setModalType("driver");
+              //setPostState({});
+              setModalOpen(false);
+            
+            }} type={modalType} />
+          )}
+        </AnimatePresence>
      </div>
   );
   

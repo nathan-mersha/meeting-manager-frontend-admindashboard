@@ -70,7 +70,7 @@ const Sidebar = ({ closeToggle }) => {
           />
 
           <NavItem
-            to={"/category/ArrangeUser"}
+            to={"/ArrangeUser"}
             handelCloseSidebar={handelCloseSidebar}
             isActiveStyle={isActiveStyle}
             isNotActiveStyle={isNotActiveStyle}
@@ -85,7 +85,7 @@ const Sidebar = ({ closeToggle }) => {
           />
 
           <NavItem
-            to={"/category/NationalCalendars"}
+            to={"/NationalCalendars"}
             handelCloseSidebar={handelCloseSidebar}
             isActiveStyle={isActiveStyle}
             isNotActiveStyle={isNotActiveStyle}
@@ -99,7 +99,7 @@ const Sidebar = ({ closeToggle }) => {
             icon={<BsCalendarCheck className="text-white" />}
           />
           <NavItem
-            to={"/category/PromoCode"}
+            to={"/PromoCode"}
             handelCloseSidebar={handelCloseSidebar}
             isActiveStyle={isActiveStyle}
             isNotActiveStyle={isNotActiveStyle}
@@ -114,7 +114,7 @@ const Sidebar = ({ closeToggle }) => {
           />
 
           <NavItem
-            to={"/category/MembershipLevels"}
+            to={"/MembershipLevels"}
             handelCloseSidebar={handelCloseSidebar}
             isActiveStyle={isActiveStyle}
             isNotActiveStyle={isNotActiveStyle}
@@ -129,7 +129,7 @@ const Sidebar = ({ closeToggle }) => {
           />
 
           <NavItem
-            to={"/category/PlatformLanguages"}
+            to={"/PlatformLanguages"}
             handelCloseSidebar={handelCloseSidebar}
             isActiveStyle={isActiveStyle}
             isNotActiveStyle={isNotActiveStyle}
@@ -143,7 +143,7 @@ const Sidebar = ({ closeToggle }) => {
             icon={<FaLanguage className="text-white" />}
           />
           <NavItem
-            to={"/category/UserAgreements"}
+            to={"/UserAgreements"}
             handelCloseSidebar={handelCloseSidebar}
             isActiveStyle={isActiveStyle}
             isNotActiveStyle={isNotActiveStyle}
@@ -158,7 +158,7 @@ const Sidebar = ({ closeToggle }) => {
           />
 
           <NavItem
-            to={"/category/SystemUsers"}
+            to={"/SystemUsers"}
             handelCloseSidebar={handelCloseSidebar}
             isActiveStyle={isActiveStyle}
             isNotActiveStyle={isNotActiveStyle}
@@ -173,7 +173,7 @@ const Sidebar = ({ closeToggle }) => {
           />
 
           <NavItem
-            to={"/category/MyAccount"}
+            to={"/MyAccount"}
             handelCloseSidebar={handelCloseSidebar}
             isActiveStyle={isActiveStyle}
             isNotActiveStyle={isNotActiveStyle}
