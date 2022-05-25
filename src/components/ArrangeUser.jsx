@@ -28,45 +28,52 @@ function ArrangeUser() {
   const [countrySelected, setCountrySelected] = useState(null);
 
   const [driverList, setDriverList] = useState(driverData);
+
   const searchDriver = (search) => {
-    const searchResult = driverData.filter(
+    const searchResult = driverList.filter(
       (driver) =>
-        driver.email
-          .toLocaleLowerCase()
-          .startsWith(search.toLocaleLowerCase()) ||
-        driver.displayName
-          .toLocaleLowerCase()
-          .startsWith(search.toLocaleLowerCase()) ||
-        driver.phoneNumber
-          .toLocaleLowerCase()
-          .startsWith(search.toLocaleLowerCase()) ||
-        driver.carType
-          .toLocaleLowerCase()
-          .startsWith(search.toLocaleLowerCase()) ||
-        driver.status.toLocaleLowerCase().startsWith(search.toLocaleLowerCase())
+        (driver.email &&
+          driver.email
+            .toLocaleLowerCase()
+            .startsWith(search.toLocaleLowerCase())) ||
+        (driver.firstName &&
+          driver.firstName
+            .toLocaleLowerCase()
+            .startsWith(search.toLocaleLowerCase())) ||
+        (driver.phoneNumber &&
+          driver.phoneNumber
+            .toLocaleLowerCase()
+            .startsWith(search.toLocaleLowerCase())) ||
+        (driver.lastName &&
+          driver.lastName
+            .toLocaleLowerCase()
+            .startsWith(search.toLocaleLowerCase())) ||
+        (driver.planType &&
+          driver.planType
+            .toLocaleLowerCase()
+            .startsWith(search.toLocaleLowerCase()))
     );
     setDriverList(searchResult);
   };
   useEffect(() => {
     const fetchData = async () => {
-      const userList = await getListUser();
-      console.log(userList);
-      setDriverList(userList);
+      driverData = await getListUser();
+      setDriverList(driverData);
     };
-    fetchData()
-      // make sure to catch any error
-      .catch(console.error);
+    fetchData().catch(console.error);
   }, []);
 
-  if(addNewUser){
-      return (
-        <AddUser handleClose={()=>{
-            setAddNewUser(false)
-        }}/>
-      )
+  if (addNewUser) {
+    return (
+      <AddUser
+        handleClose={() => {
+          setAddNewUser(false);
+        }}
+      />
+    );
   }
   return (
-     <div className="ml-8 mt-8 bg-white ">
+    <div className="ml-8 mt-8 bg-white ">
       <div className="flex items-end justify-end mb-3 space-x-4">
         <div className="space-y-1">
           <h1 className=" text-xl font-semibold ">Filter By</h1>
@@ -95,10 +102,7 @@ function ArrangeUser() {
             className={`${
               membershipFilter ? "" : "hidden"
             } origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none`}
-            role="menu"
-            aria-orientation="vertical"
-            aria-labelledby="menu-button"
-            tabindex="-1"
+       
           >
             <div className="py-1" role="none">
               <p
@@ -168,10 +172,7 @@ function ArrangeUser() {
             className={`${
               countryFilter ? "" : "hidden"
             } origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none`}
-            role="menu"
-            aria-orientation="vertical"
-            aria-labelledby="menu-button"
-            tabindex="-1"
+            
           >
             <div className="py-1" role="none">
               <p
@@ -230,7 +231,7 @@ function ArrangeUser() {
           <button
             className=" flex items-center justify-between gap-x-2 bg-blue-600  text-white px-6 rounded-lg"
             onClick={() => {
-               setAddNewUser(true);
+              setAddNewUser(true);
             }}
           >
             <IoAddCircleOutline className="w-5 h-5 text-white" />
@@ -246,7 +247,7 @@ function ArrangeUser() {
             className="px-3 py-1 focus:outline-none bg-gray-200"
             onChange={(e) => {
               setDriverList(driverData);
-              searchDriver(e.target.value);
+              searchDriver("e.target.value");
             }}
           />
         </div>
@@ -301,7 +302,7 @@ function ArrangeUser() {
                 <tbody>
                   {driverList.map((driver) => {
                     return (
-                      <tr className="border-b " key={driver._id}>
+                      <tr className="border-b " key={driver.id}>
                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                           <div className="flex space-x-3">
                             <h1 className="text-gray-900 text-sm">
