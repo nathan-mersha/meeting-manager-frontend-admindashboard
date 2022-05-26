@@ -1,6 +1,7 @@
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { createContext, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { fetchToken, fetchUser } from "../utils/fetchUser";
+import { getConfig, updateConfig } from "./useConfig";
 
 const AuthContext = createContext({
   user: null,
@@ -15,7 +16,10 @@ export const AuthProvider = ({ children }) => {
   //   const router = useRouter()
   const homeUrl = "https://mmserver.ml/";
   const navigate = useNavigate();
+  const isMount=useRef();
   const [user, setUser] = useState(null);
+  const [token, setToken] = useState(null);
+  const [config, setConfig] = useState(null);
   const [error, setError] = useState(null);
   const [initialLoading, setInitialLoading] = useState(true);
   const [loading, setLoading] = useState(false);
@@ -27,9 +31,28 @@ export const AuthProvider = ({ children }) => {
       navigate("/login", { replace: true });
     } else {
       setUser(user);
+      setToken(token);
       navigate("/", { replace: true });
     }
   }, [fetchToken()]);
+
+  useEffect(() => {
+    // if(isMount.current)     return;
+  if(!token) return;
+      const configGet = async () => {
+        const configData = await getConfig();
+        if(configData){
+          setConfig(configData);
+          const configUpdate= await updateConfig(configData);
+        }
+
+      }
+
+      configGet();
+      // isMount.current=true;
+
+  }, [token]);
+
 
   const signUp = (email, password) => {
     setLoading(true);
@@ -79,7 +102,7 @@ export const AuthProvider = ({ children }) => {
         new_password: newPassword
       }),
     };
-    await fetch(homeUrl + "server/user/reset_password", requestOptions)
+    await fetch(homeUrl + "server/user/resetCred", requestOptions)
       .then(async (response) => {
         const json = await response.json();
         console.log(json);
@@ -102,7 +125,7 @@ export const AuthProvider = ({ children }) => {
       headers: { "content-type": "application/json" },
       body: JSON.stringify({ emailOrPhoneNumber: email, password: password }),
     };
-    const response = await fetch(
+     await fetch(
       homeUrl + "server/user/login",
       requestOptions
     )
@@ -142,10 +165,12 @@ export const AuthProvider = ({ children }) => {
       error,
       loading,
       logout,
+      token,
       forgotPassword,
+      config,
       enterCodeAndChangePassword,
     }),
-    [user, loading, error]
+    [user,token, loading, error]
   );
   return (
     <AuthContext.Provider value={memoedValue}>

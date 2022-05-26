@@ -43,7 +43,7 @@ const Sidebar = ({ closeToggle }) => {
           className="flex my-4 ml-2 mb-5 gap-2 p-2 items-center "
         >
           <img
-            src="https://th.bing.com/th/id/R.0cfe3cb86925753834d56c792931315c?rik=GA0RqPxgQyA0KA&pid=ImgRaw&r=0"
+            src= {user?.profilePicture?user?.profilePicture : "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png"}
             alt="user"
             className="w-10 h-10 rounded-full"
           />

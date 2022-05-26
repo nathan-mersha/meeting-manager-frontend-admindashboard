@@ -28,9 +28,10 @@ function ArrangeUser() {
   const [countrySelected, setCountrySelected] = useState(null);
 
   const [driverList, setDriverList] = useState(driverData);
+  const [user, setUser] = useState(null);
 
   const searchDriver = (search) => {
-    const searchResult = driverList.filter(
+    const searchResult = driverData.filter(
       (driver) =>
         (driver.email &&
           driver.email
@@ -55,6 +56,21 @@ function ArrangeUser() {
     );
     setDriverList(searchResult);
   };
+  const membershipSetter = (planType) => {
+    if (planType === null) {
+      setDriverList(driverData);
+    } else {
+      const filterResult = driverData.filter(
+        (driver) =>
+          driver.planType &&
+          driver.planType
+            .toLocaleLowerCase()
+            .startsWith(planType.toLocaleLowerCase())
+      );
+
+      setDriverList(filterResult);
+    }
+  };
   useEffect(() => {
     const fetchData = async () => {
       driverData = await getListUser();
@@ -63,7 +79,17 @@ function ArrangeUser() {
     fetchData().catch(console.error);
   }, []);
 
-  if (addNewUser) {
+if(addNewUser&& user){
+  return (
+    <AddUser
+     user={user}
+      handleClose={() => {
+        setAddNewUser(false);
+      }}
+    />
+  );
+}
+ else if (addNewUser) {
     return (
       <AddUser
         handleClose={() => {
@@ -102,47 +128,48 @@ function ArrangeUser() {
             className={`${
               membershipFilter ? "" : "hidden"
             } origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none`}
-       
           >
             <div className="py-1" role="none">
               <p
-                className=" text-gray-700 block px-4 py-2 text-sm cursor-pointer"
+                className=" w-full border-b-gray-500 text-gray-700 block px-4 py-2 text-sm cursor-pointer"
                 onClick={(e) => {
                   e.stopPropagation();
                   setMembershipSelected();
                   setMembershipFilter(false);
+                  membershipSetter(null);
                 }}
               >
                 All
               </p>
               <p
-                className=" text-gray-700 block px-4 py-2 text-sm cursor-pointer"
+                className=" w-full border-b-gray-500 text-gray-700 block px-4 py-2 text-sm cursor-pointer"
                 onClick={(e) => {
                   e.stopPropagation();
                   setMembershipSelected("Vip");
                   setMembershipFilter(false);
+                  membershipSetter("Vip");
                 }}
               >
                 Vip
               </p>
               <p
-                className=" text-gray-700 block px-4 py-2 text-sm cursor-pointer"
+                className=" w-full border-b-gray-500 text-gray-700 block px-4 py-2 text-sm cursor-pointer"
                 onClick={(e) => {
                   e.stopPropagation();
-
                   setMembershipSelected("Premium");
                   setMembershipFilter(false);
+                  membershipSetter("Premium");
                 }}
               >
                 Premium
               </p>
               <p
-                className=" text-gray-700 block px-4 py-2 text-sm cursor-pointer"
+                className=" w-full border-b-gray-500 text-gray-700 block px-4 py-2 text-sm cursor-pointer"
                 onClick={(e) => {
                   e.stopPropagation();
-
                   setMembershipSelected("Basic");
                   setMembershipFilter(false);
+                  membershipSetter("Basic");
                 }}
               >
                 Basic
@@ -172,7 +199,6 @@ function ArrangeUser() {
             className={`${
               countryFilter ? "" : "hidden"
             } origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none`}
-            
           >
             <div className="py-1" role="none">
               <p
@@ -247,7 +273,7 @@ function ArrangeUser() {
             className="px-3 py-1 focus:outline-none bg-gray-200"
             onChange={(e) => {
               setDriverList(driverData);
-              searchDriver("e.target.value");
+              searchDriver(e.target.value);
             }}
           />
         </div>
@@ -310,18 +336,18 @@ function ArrangeUser() {
                             </h1>
                           </div>
                         </td>
-                        <td className="font-medium text-blue-500 font-light px-6 py-4 whitespace-nowrap ">
+                        <td className="font-medium text-blue-500  px-6 py-4 whitespace-nowrap ">
                           {driver.email}
                         </td>
-                        <td className="font-medium text-gray-700 font-light px-6 py-4 whitespace-nowrap">
+                        <td className="font-medium text-gray-700  px-6 py-4 whitespace-nowrap">
                           {driver.phoneNumber}
                         </td>
 
-                        <td className="font-medium  text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                        <td className="font-medium  text-gray-900  px-6 py-4 whitespace-nowrap">
                           {driver.planType}
                         </td>
 
-                        <td className="font-medium text-gray-700 font-light px-6 py-4 whitespace-nowrap">
+                        <td className="font-medium text-gray-700 px-6 py-4 whitespace-nowrap">
                           {driver.country}
                         </td>
 
@@ -335,7 +361,13 @@ function ArrangeUser() {
                                 setModalOpen(true);
                               }}
                             />
-                            <FiEdit className="h-5 w-5 text-green-500" />
+                            <FiEdit
+                              className="h-5 w-5 text-green-500"
+                              onClick={() => {
+                                setUser(driver);
+                                setAddNewUser(true);
+                              }}
+                            />
                             <MdDeleteSweep className="h-5 w-5 text-red-500" />
                           </div>
                         </td>
