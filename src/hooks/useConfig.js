@@ -24,7 +24,6 @@ export const  updateConfig= async (Config)=>{
     const requestOptions = {
         method: "PUT",
         headers: { 
-            "mode": 'cors',
             "content-type": "application/json" ,
             'accept': 'application/json',
             // 'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjEyYTkwNjBmLWRkZGItNDAzOS1hMGJkLTM3NjRmNDUyMjk3NCIsImV4cGlyYXRpb24iOiIyMDIyLTExLTI1In0.CSSITkieqyAd5Dr12jMN7__3vuNwRnEHIsxoiRmMqBw'
