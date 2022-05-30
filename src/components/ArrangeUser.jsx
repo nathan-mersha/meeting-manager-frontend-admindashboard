@@ -359,6 +359,7 @@ if(addNewUser&& user){
                                 setPostState(driver);
                                 setModalType("driverInfo");
                                 setModalOpen(true);
+                                
                               }}
                             />
                             <FiEdit
