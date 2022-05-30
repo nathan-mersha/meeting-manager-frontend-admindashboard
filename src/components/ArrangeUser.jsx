@@ -13,7 +13,7 @@ import { modalState, modalTypeState } from "../atoms/modalAtom";
 import { getDataState } from "../atoms/postAtom";
 import AddUser from "./AddUser";
 
-let driverData = [];
+let userData = [];
 function ArrangeUser() {
   const [addNewUser, setAddNewUser] = useState(false);
 
@@ -27,54 +27,54 @@ function ArrangeUser() {
   const [countryFilter, setCountryFilter] = useState(false);
   const [countrySelected, setCountrySelected] = useState(null);
 
-  const [driverList, setDriverList] = useState(driverData);
+  const [userList, setUserList] = useState(userData);
   const [user, setUser] = useState(null);
 
-  const searchDriver = (search) => {
-    const searchResult = driverData.filter(
-      (driver) =>
-        (driver.email &&
-          driver.email
+  const searchUser = (search) => {
+    const searchResult = userData.filter(
+      (user) =>
+        (user.email &&
+          user.email
             .toLocaleLowerCase()
             .startsWith(search.toLocaleLowerCase())) ||
-        (driver.firstName &&
-          driver.firstName
+        (user.firstName &&
+          user.firstName
             .toLocaleLowerCase()
             .startsWith(search.toLocaleLowerCase())) ||
-        (driver.phoneNumber &&
-          driver.phoneNumber
+        (user.phoneNumber &&
+          user.phoneNumber
             .toLocaleLowerCase()
             .startsWith(search.toLocaleLowerCase())) ||
-        (driver.lastName &&
-          driver.lastName
+        (user.lastName &&
+          user.lastName
             .toLocaleLowerCase()
             .startsWith(search.toLocaleLowerCase())) ||
-        (driver.planType &&
-          driver.planType
+        (user.planType &&
+          user.planType
             .toLocaleLowerCase()
             .startsWith(search.toLocaleLowerCase()))
     );
-    setDriverList(searchResult);
+    setUserList(searchResult);
   };
   const membershipSetter = (planType) => {
     if (planType === null) {
-      setDriverList(driverData);
+      setUserList(userData);
     } else {
-      const filterResult = driverData.filter(
-        (driver) =>
-          driver.planType &&
-          driver.planType
+      const filterResult = userData.filter(
+        (user) =>
+          user.planType &&
+          user.planType
             .toLocaleLowerCase()
             .startsWith(planType.toLocaleLowerCase())
       );
 
-      setDriverList(filterResult);
+      setUserList(filterResult);
     }
   };
   useEffect(() => {
     const fetchData = async () => {
-      driverData = await getListUser();
-      setDriverList(driverData);
+      userData = await getListUser();
+      setUserList(userData);
     };
     fetchData().catch(console.error);
   }, []);
@@ -272,8 +272,8 @@ if(addNewUser&& user){
             placeholder="Search"
             className="px-3 py-1 focus:outline-none bg-gray-200"
             onChange={(e) => {
-              setDriverList(driverData);
-              searchDriver(e.target.value);
+              setUserList(userData);
+              searchUser(e.target.value);
             }}
           />
         </div>
@@ -326,29 +326,29 @@ if(addNewUser&& user){
                   </tr>
                 </thead>
                 <tbody>
-                  {driverList.map((driver) => {
+                  {userList.map((user) => {
                     return (
-                      <tr className="border-b " key={driver.id}>
+                      <tr className="border-b " key={user.id}>
                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                           <div className="flex space-x-3">
                             <h1 className="text-gray-900 text-sm">
-                              {driver.firstName} {driver.lastName}
+                              {user.firstName} {user.lastName}
                             </h1>
                           </div>
                         </td>
                         <td className="font-medium text-blue-500  px-6 py-4 whitespace-nowrap ">
-                          {driver.email}
+                          {user.email}
                         </td>
                         <td className="font-medium text-gray-700  px-6 py-4 whitespace-nowrap">
-                          {driver.phoneNumber}
+                          {user.phoneNumber}
                         </td>
 
                         <td className="font-medium  text-gray-900  px-6 py-4 whitespace-nowrap">
-                          {driver.planType}
+                          {user.planType}
                         </td>
 
                         <td className="font-medium text-gray-700 px-6 py-4 whitespace-nowrap">
-                          {driver.country}
+                          {user.country}
                         </td>
 
                         <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
@@ -356,16 +356,16 @@ if(addNewUser&& user){
                             <MdVisibility
                               className="h-5 w-5 text-blue-500"
                               onClick={() => {
-                                setPostState(driver);
-                                setModalType("driverInfo");
+                                setPostState(user);
+                                setModalType("userInfo");
                                 setModalOpen(true);
-                                
+
                               }}
                             />
                             <FiEdit
                               className="h-5 w-5 text-green-500"
                               onClick={() => {
-                                setUser(driver);
+                                setUser(user);
                                 setAddNewUser(true);
                               }}
                             />

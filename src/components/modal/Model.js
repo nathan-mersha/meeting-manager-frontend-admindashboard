@@ -84,7 +84,7 @@ const Modal = ({ handleClose, type }) => {
         </motion.div>
       )}
 
-      {type === "driverAssign" && (
+      {type === "userAssign" && (
         <motion.div
           onClick={(e) => e.stopPropagation()}
           className="rounded-xl flex flex-col justify-center bg-white"
@@ -93,12 +93,12 @@ const Modal = ({ handleClose, type }) => {
           animate="visible"
           exit="exit"
         >
-          {/* <DriverOrder handleClose={handleClose} order={post} />\ */}
+          {/* <UserOrder handleClose={handleClose} order={post} />\ */}
         <div></div>
 
         </motion.div>
       )}
-      {type === "driver" && (
+      {type === "user" && (
         <motion.div
           onClick={(e) => e.stopPropagation()}
           className="rounded-xl flex flex-col justify-center bg-white"
@@ -107,12 +107,12 @@ const Modal = ({ handleClose, type }) => {
           animate="visible"
           exit="exit"
         >
-          {/* <AddDriver handleClose={handleClose} /> */}
+          {/* <AddUser handleClose={handleClose} /> */}
         <div></div>
         </motion.div>
       )}
 
-      {type === "driverInfo" && (
+      {type === "userInfo" && (
         <motion.div
           onClick={(e) => e.stopPropagation()}
           className="rounded-xl flex flex-col justify-center bg-white"
@@ -121,7 +121,7 @@ const Modal = ({ handleClose, type }) => {
           animate="visible"
           exit="exit"
         >
-          <UserInfo handleClose={handleClose} driverId={post} />
+          <UserInfo handleClose={handleClose} userId={post} />
         </motion.div>
       )}
     </Backdrop>

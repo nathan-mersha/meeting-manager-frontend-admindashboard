@@ -4,22 +4,22 @@ import { MdDeleteSweep } from "react-icons/md";
 
 import { AiOutlineCloseCircle } from "react-icons/ai";
 
-function UserInfo({ driverId, handleClose }) {
-  const [driverInfo, setDriverInfo] = useState(driverId);
+function UserInfo({ userId, handleClose }) {
+  const [userInfo, setUserInfo] = useState(userId);
 
   // useEffect(
   //   () =>
-  //     onSnapshot(query(doc(db, "Users", driverId)), (snapshot) => {
-  //       // const driverData = snapshot.docs.map((data) => {
+  //     onSnapshot(query(doc(db, "Users", userId)), (snapshot) => {
+  //       // const userData = snapshot.docs.map((data) => {
   //       //   return {...data.data(), _id: data.id };
   //       // });
-  //       // console.debug(driverData);
+  //       // console.debug(userData);
 
-  //       setDriverInfo({...snapshot.data(),_id:snapshot.id});
+  //       setUserInfo({...snapshot.data(),_id:snapshot.id});
 
   //       //   setLoading(false);
   //     }),
-  //   [driverId]
+  //   [userId]
   // );
   return (
     <div className="w-full flex justify-center items-center  fixed  outline-none focus:outline-none shadow-md rounded-md">
@@ -37,11 +37,11 @@ function UserInfo({ driverId, handleClose }) {
                 </button>
               </div>
 
-              {driverInfo && (
+              {userInfo && (
                 <div className=" flex flex-col items-center gap-x-4 ">
-                  {driverInfo.profilePicture ? (
+                  {userInfo.profilePicture ? (
                     <img
-                      src={driverInfo.profilePicture}
+                      src={userInfo.profilePicture}
                       alt="image"
                       className="h-20 w-20 rounded-full"
                     />
@@ -59,35 +59,35 @@ function UserInfo({ driverId, handleClose }) {
                         <h4 className="">Name</h4>
                         <h4 className="text-blue-500 font-normal text-xl">.</h4>
                         <h4 className="font-normal text-black">
-                          {driverInfo.firstName} {driverInfo.lastName}
+                          {userInfo.firstName} {userInfo.lastName}
                         </h4>
                       </div>
                       <div className="flex items-center p-2 justify-center gap-x-2 border-b-2 border-gray-200">
                         <h4 className="">Email</h4>
                         <h4 className="text-blue-500 font-normal text-xl">.</h4>
                         <h4 className="font-normal text-black">
-                          {driverInfo.email}
+                          {userInfo.email}
                         </h4>
                       </div>
                       <div className="flex items-center p-2 justify-center gap-x-2 border-b-2 border-gray-200">
                         <h4 className="">Phone Number</h4>
                         <h4 className="text-blue-500 font-normal text-xl">.</h4>
                         <h4 className="font-normal text-black">
-                          {driverInfo.phoneNumber}
+                          {userInfo.phoneNumber}
                         </h4>
                       </div>
                       <div className="flex items-center p-2 justify-center gap-x-2 border-b-2 border-gray-200">
                         <h4 className="">DoB</h4>
                         <h4 className="text-blue-500 font-normal text-xl">.</h4>
                         <h4 className="font-normal text-black">
-                          {driverInfo.dob} 
+                          {userInfo.dob} 
                         </h4>
                       </div>
                       <div className="flex items-center p-2 justify-center gap-x-2 border-b-2 border-gray-200">
                         <h4 className="">Gender</h4>
                         <h4 className="text-blue-500 font-normal text-xl">.</h4>
                         <h4 className="font-normal text-black">
-                          {driverInfo.gender} 
+                          {userInfo.gender} 
                         </h4>
                       </div>
 
@@ -95,7 +95,7 @@ function UserInfo({ driverId, handleClose }) {
                         <h4 className="">Country</h4>
                         <h4 className="text-blue-500 font-normal text-xl">.</h4>
                         <h4 className="font-normal text-black">
-                          {driverInfo.country} 
+                          {userInfo.country} 
                         </h4>
                       </div>
 
@@ -104,7 +104,7 @@ function UserInfo({ driverId, handleClose }) {
                         <h4 className="">city</h4>
                         <h4 className="text-blue-500 font-normal text-xl">.</h4>
                         <h4 className="font-normal text-black">
-                          {driverInfo.city} 
+                          {userInfo.city} 
                         </h4>
                       </div>
 
@@ -112,7 +112,7 @@ function UserInfo({ driverId, handleClose }) {
                         <h4 className="">Membership</h4>
                         <h4 className="text-blue-500 font-normal text-xl">.</h4>
                         <h4 className="font-normal text-black">
-                          {driverInfo.planType} 
+                          {userInfo.planType} 
                         </h4>
                       </div>
 
@@ -120,14 +120,14 @@ function UserInfo({ driverId, handleClose }) {
                         <h4 className="">Company</h4>
                         <h4 className="text-blue-500 font-normal text-xl">.</h4>
                         <h4 className="font-normal text-black">
-                          {driverInfo.companyName} 
+                          {userInfo.companyName} 
                         </h4>
                       </div>
                       <div className="flex items-center p-2 justify-center gap-x-2 ">
                         <h4 className="">Position</h4>
                         <h4 className="text-blue-500 font-normal text-xl">.</h4>
                         <h4 className="font-normal text-black">
-                          {driverInfo.title} 
+                          {userInfo.title} 
                         </h4>
                       </div>
 
@@ -139,7 +139,7 @@ function UserInfo({ driverId, handleClose }) {
 
             <div className="w-full  ">
               <div className="flex items-center justify-center p-5">
-              { !driverInfo.isAccountDeactivated?
+              { !userInfo.isAccountDeactivated?
               <button
                   className=" flex items-center justify-center gap-x-2 py-2 rounded-xl text-sm px-8 bg-red-500 text-white"
                   onClick={() => {

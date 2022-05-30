@@ -29,7 +29,7 @@ function App() {
      <AnimatePresence>
           {modalOpen && (
             <Modal handleClose={() => {
-              setModalType("driver");
+              setModalType("user");
               //setPostState({});
               setModalOpen(false);
             
