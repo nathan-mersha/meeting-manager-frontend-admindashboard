@@ -139,16 +139,29 @@ function UserInfo({ driverId, handleClose }) {
 
             <div className="w-full  ">
               <div className="flex items-center justify-center p-5">
-                
-                <button
+              { !driverInfo.isAccountDeactivated?
+              <button
                   className=" flex items-center justify-center gap-x-2 py-2 rounded-xl text-sm px-8 bg-red-500 text-white"
                   onClick={() => {
                     handleClose();
                   }}
                 >
                   <MdDeleteSweep className="h-6 w-6 text-white" />
-                  Delete
+                  Deactivate
                 </button>
+                :<button
+                className=" flex items-center justify-center gap-x-2 py-2 rounded-xl text-sm px-8 bg-blue-500 text-white"
+                onClick={() => {
+                  handleClose();
+                }}
+              >
+                <MdDeleteSweep className="h-6 w-6 text-white" />
+                Activate
+              </button>
+              
+              }
+
+                
               </div>
             </div>
           </div>
