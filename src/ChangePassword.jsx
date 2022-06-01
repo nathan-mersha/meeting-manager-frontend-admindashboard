@@ -21,7 +21,7 @@ function ChangePassword() {
   } = useForm();
 
   const onSubmit = async (data) => {
-      if(data.ChangePassword!== data.ConfirmPassword){
+      if(data.newPassword!== data.confirmPassword){
         alert("Password and Confirm Password doesn't match")
         return ;
       }
