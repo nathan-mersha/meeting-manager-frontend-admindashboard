@@ -28,7 +28,7 @@ function ChangePassword() {
 
       
     console.log(location.state.email,location.state.code, data.newPassword)
-    await enterCodeAndChangePassword(location.state.email,location.state.code, data.password);
+    await enterCodeAndChangePassword(location.state.email,location.state.code, data.newPassword);
     
   }
 

@@ -43,7 +43,7 @@ export const AuthProvider = ({ children }) => {
         const configData = await getConfig();
         if(configData){
           setConfig(configData);
-          const configUpdate= await updateConfig(configData);
+          // const configUpdate= await updateConfig(configData);
         }
 
       }
@@ -95,11 +95,11 @@ export const AuthProvider = ({ children }) => {
     setLoading(true);
     const requestOptions = {
       method: "POST",
-      headers: { "content-type": "application/json" ,"accept": "application/json"},
+      headers: { "content-type": "application/json"},
       body: JSON.stringify({
-        email: email,
-        reset_code: code,
-        new_password: newPassword
+        email:""+email,
+        reset_code:""+code,
+        new_password:""+newPassword
       }),
     };
     await fetch(homeUrl + "server/user/reset_password", requestOptions)
