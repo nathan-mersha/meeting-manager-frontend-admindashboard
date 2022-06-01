@@ -102,7 +102,7 @@ export const AuthProvider = ({ children }) => {
         new_password: newPassword
       }),
     };
-    await fetch(homeUrl + "server/user/resetCred", requestOptions)
+    await fetch(homeUrl + "server/user/reset_password", requestOptions)
       .then(async (response) => {
         const json = await response.json();
         console.log(json);
