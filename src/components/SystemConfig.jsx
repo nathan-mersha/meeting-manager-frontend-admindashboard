@@ -24,6 +24,7 @@ function SystemConfig() {
     var xp= config;
       xp["tokenExpirationInDay"]=parseInt(data.day);
        await updateConfig(xp);
+       alert("token Expiration In Day has been updated to "+data.day);
   
        
   };
