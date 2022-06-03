@@ -33,9 +33,14 @@ const Sidebar = ({ closeToggle }) => {
           className="flex px-5 gap-2 my-6 w-190 items-center"
           onClick={() => handelCloseSidebar}
         >
-          <span className="flex w-full text-2xl font-serif items-center justify-center">
-            Logo
-          </span>
+        
+          <img
+        src="../arrange_WHITE_logo.svg"
+        className="flex w-full h-[100px] text-2xl font-serif items-center justify-center"
+        width={50}
+        alt="sa"
+        height={50}
+      />
         </div>
         <Link
           to={`/`}

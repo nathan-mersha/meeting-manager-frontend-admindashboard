@@ -4,7 +4,6 @@ import {  useForm } from 'react-hook-form'
 import useAuth from './hooks/useAuth';
 import { FiLogIn } from 'react-icons/fi';
 import { useNavigate } from 'react-router-dom';
-
 function Login() {
 const  navigate = useNavigate();
   const [login, setLogin] = useState(false)
@@ -48,7 +47,7 @@ useEffect(() => {
         <div className='flex items-center justify-center'>
 
         <img
-        src="https://www.carlogos.org/logo/MG-logo-red-2010-1920x1080.png"
+        src="../arrange_BLUE_logo.svg"
         className=" cursor-pointer object-contain md:left-10 md:top-6"
         width={150}
         alt="sa"

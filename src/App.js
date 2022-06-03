@@ -11,6 +11,7 @@ import { modalState, modalTypeState } from "./atoms/modalAtom";
 import { getDataState } from "./atoms/postAtom";
 import { AnimatePresence } from "framer-motion";
 import Modal from "./components/modal/Model";
+
 function App() {
   const [modalOpen, setModalOpen] = useRecoilState(modalState);
   const [modalType, setModalType] = useRecoilState(modalTypeState);
