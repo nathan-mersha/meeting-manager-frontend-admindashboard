@@ -4,6 +4,10 @@ import { AiFillCloseCircle } from "react-icons/ai";
 import { Sidebar } from "../components";
 import { useParams } from "react-router-dom";
 import ArrangeUser from "../components/ArrangeUser";
+import NationalCalendars from "../components/NationalCalendars";
+import PromoCode from "../components/PromoCode";
+import MembershipLevels from "../components/MembershipLevels";
+import SystemConfig from "../components/SystemConfig";
 
 function Home() {
     const isMount=useRef();
@@ -67,31 +71,23 @@ function Home() {
           )
         } else if (categoryData==="NationalCalendars") {
           return (
-            <div>NationalCalendars</div>
+           < NationalCalendars />
           )
         }else if (categoryData==="PromoCode") {
           return (
-            <div>PromoCode</div>
+            <PromoCode />
           )
         } else if (categoryData==="MembershipLevels") {
           return (
-            <div>MembershipLevels</div>
+            <MembershipLevels />
           )
-        } else if (categoryData==="PlatformLanguages") {
+        }else if (categoryData==="SystemConfig") {
           return (
-            <div>PlatformLanguages</div>
-          )
-        } else if (categoryData==="UserAgreements") {
-          return (
-            <div>UserAgreements</div>
+            <SystemConfig />
           )
         }else if (categoryData==="SystemUsers") {
           return (
             <div>SystemUsers</div>
-          )
-        }else if (categoryData==="MyAccount") {
-          return (
-            <div>MyAccount</div>
           )
         } else {
           return (

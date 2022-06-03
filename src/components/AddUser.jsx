@@ -149,7 +149,7 @@ function AddUser({ handleClose, user }) {
 
               {errors.country && (
                 <p className="p-1 text-[13px] font-light  text-orange-500">
-                  Please enter a valid membership Level.
+                  Please enter a valid country.
                 </p>
               )}
             </label>

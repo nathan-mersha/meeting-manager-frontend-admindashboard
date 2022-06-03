@@ -42,6 +42,7 @@ export const AuthProvider = ({ children }) => {
       const configGet = async () => {
         const configData = await getConfig();
         if(configData){
+          
           setConfig(configData);
           // const configUpdate= await updateConfig(configData);
         }
@@ -170,7 +171,7 @@ export const AuthProvider = ({ children }) => {
       config,
       enterCodeAndChangePassword,
     }),
-    [user,token, loading, error]
+    [user,token, loading, error,config]
   );
   return (
     <AuthContext.Provider value={memoedValue}>

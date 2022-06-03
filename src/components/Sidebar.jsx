@@ -84,7 +84,7 @@ const Sidebar = ({ closeToggle }) => {
             icon={<FiUserCheck className="text-white" />}
           />
 
-          <NavItem
+          {/* <NavItem
             to={"/NationalCalendars"}
             handelCloseSidebar={handelCloseSidebar}
             isActiveStyle={isActiveStyle}
@@ -97,7 +97,7 @@ const Sidebar = ({ closeToggle }) => {
                 : ""
             }
             icon={<BsCalendarCheck className="text-white" />}
-          />
+          /> */}
           <NavItem
             to={"/PromoCode"}
             handelCloseSidebar={handelCloseSidebar}
@@ -128,33 +128,21 @@ const Sidebar = ({ closeToggle }) => {
             icon={<MdCardMembership className="text-white" />}
           />
 
+          
+
           <NavItem
-            to={"/PlatformLanguages"}
+            to={"/SystemConfig"}
             handelCloseSidebar={handelCloseSidebar}
             isActiveStyle={isActiveStyle}
             isNotActiveStyle={isNotActiveStyle}
             categoryId={categoryId}
-            title={"Platform Languages"}
+            title={"System Config"}
             className={
-              categoryId === "PlatformLanguages"
+              categoryId === "SystemConfig"
                 ? "bg-white rounded-tl-lg rounded-bl-lg p-2 w-full"
                 : ""
             }
-            icon={<FaLanguage className="text-white" />}
-          />
-          <NavItem
-            to={"/UserAgreements"}
-            handelCloseSidebar={handelCloseSidebar}
-            isActiveStyle={isActiveStyle}
-            isNotActiveStyle={isNotActiveStyle}
-            categoryId={categoryId}
-            title={"User Agreements"}
-            className={
-              categoryId === "UserAgreements"
-                ? "bg-white rounded-tl-lg rounded-bl-lg p-2 w-full"
-                : ""
-            }
-            icon={<FaFingerprint className="text-white" />}
+            icon={<FaUsers className="text-white" />}
           />
 
           <NavItem
@@ -166,21 +154,6 @@ const Sidebar = ({ closeToggle }) => {
             title={"System Users"}
             className={
               categoryId === "SystemUsers"
-                ? "bg-white rounded-tl-lg rounded-bl-lg p-2 w-full"
-                : ""
-            }
-            icon={<FaUsers className="text-white" />}
-          />
-
-          <NavItem
-            to={"/MyAccount"}
-            handelCloseSidebar={handelCloseSidebar}
-            isActiveStyle={isActiveStyle}
-            isNotActiveStyle={isNotActiveStyle}
-            categoryId={categoryId}
-            title={"My Account"}
-            className={
-              categoryId === "MyAccount"
                 ? "bg-white rounded-tl-lg rounded-bl-lg p-2 w-full"
                 : ""
             }

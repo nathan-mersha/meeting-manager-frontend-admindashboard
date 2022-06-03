@@ -12,11 +12,12 @@ import { useRecoilState } from "recoil";
 import { modalState, modalTypeState } from "../atoms/modalAtom";
 import { getDataState } from "../atoms/postAtom";
 import AddUser from "./AddUser";
+import useAuth from '../hooks/useAuth';
 
 let userData = [];
 function ArrangeUser() {
   const [addNewUser, setAddNewUser] = useState(false);
-
+  const { config } = useAuth()
   const [modalOpen, setModalOpen] = useRecoilState(modalState);
   const [modalType, setModalType] = useRecoilState(modalTypeState);
   const [postState, setPostState] = useRecoilState(getDataState);
@@ -98,6 +99,10 @@ if(addNewUser&& user){
       />
     );
   }
+  
+
+
+
   return (
     <div className="ml-8 mt-8 bg-white ">
       <div className="flex items-end justify-end mb-3 space-x-4">
@@ -130,50 +135,39 @@ if(addNewUser&& user){
             } origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none`}
           >
             <div className="py-1" role="none">
-              <p
-                className=" w-full border-b-gray-500 text-gray-700 block px-4 py-2 text-sm cursor-pointer"
-                onClick={(e) => {
+            <p
+                    className=" cursor-pointer w-full flex items-start justify-start px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900"
+              
+                onClick={
+                  (e) => {
                   e.stopPropagation();
                   setMembershipSelected();
                   setMembershipFilter(false);
                   membershipSetter(null);
-                }}
+                }
+              }
               >
                 All
               </p>
-              <p
-                className=" w-full border-b-gray-500 text-gray-700 block px-4 py-2 text-sm cursor-pointer"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setMembershipSelected("Vip");
-                  setMembershipFilter(false);
-                  membershipSetter("Vip");
-                }}
-              >
-                Vip
-              </p>
-              <p
-                className=" w-full border-b-gray-500 text-gray-700 block px-4 py-2 text-sm cursor-pointer"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setMembershipSelected("Premium");
-                  setMembershipFilter(false);
-                  membershipSetter("Premium");
-                }}
-              >
-                Premium
-              </p>
-              <p
-                className=" w-full border-b-gray-500 text-gray-700 block px-4 py-2 text-sm cursor-pointer"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setMembershipSelected("Basic");
-                  setMembershipFilter(false);
-                  membershipSetter("Basic");
-                }}
-              >
-                Basic
-              </p>
+              {
+                Object.keys(config.pricingPlan).map((membership,index) => (
+                  <button
+                    key={index}
+                    type="button"
+                    className=" w-full flex items-start justify-start px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setMembershipSelected(membership);
+                      membershipSetter(membership);
+                      setMembershipFilter(false);
+                    }}
+                    >
+                    {membership}
+                    </button>
+                ))
+                  }
+           
+             
             </div>
           </div>
         </div>
