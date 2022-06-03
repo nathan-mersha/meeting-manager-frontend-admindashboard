@@ -23,6 +23,7 @@ function PromoCode() {
       var xp= config;
       xp["promoPeriod"]=parseInt(value);
        await updateConfig(xp);
+       alert("promo period updated to "+value+" months");
   };
   const { config } = useAuth();
 
