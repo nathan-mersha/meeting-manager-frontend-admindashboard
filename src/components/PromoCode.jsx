@@ -21,15 +21,12 @@ function PromoCode() {
   } = useForm();
   const onSubmit = async () => {
       var xp= config;
-      xp["promoCode"]={"month":value};
-
+      xp["promoPeriod"]=parseInt(value);
        await updateConfig(xp);
-  
-       
   };
   const { config } = useAuth();
 
-  const [value, setValue] = useState("0");
+  const [value, setValue] = useState( config["promoPeriod"]);
 
   const handleChange = (e) => {
       
