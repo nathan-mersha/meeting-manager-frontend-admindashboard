@@ -51,6 +51,8 @@ export const AuthProvider = ({ children }) => {
       if (configData) {
         setConfig(configData);
         // const configUpdate= await updateConfig(configData);
+      }else{
+        logout();
       }
     };
 
