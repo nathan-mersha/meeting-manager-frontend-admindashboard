@@ -79,6 +79,27 @@ export const AuthProvider = ({ children }) => {
       .catch((error) => alert(error.message))
       .finally(() => setLoading(false));
   };
+  const updateUser = async (user) => {
+    setLoading(true);
+    const requestOptions = {
+      method: "PUT",
+      headers: { "content-type": "application/json", "token": token },
+      body: JSON.stringify(user),
+    };
+    return fetch(homeUrl + "server/user/admin/update_user/"+user.id, requestOptions)
+      .then(async (response) => {
+        const json = await response.json();
+        console.log(json);
+        if (json["message"]) {
+          return "done";
+        } else {
+          return "error";
+          // alert(json["detail"]);
+        }
+      })
+      .catch((error) => alert(error.message))
+      .finally(() => setLoading(false));
+  };
 
   const signUp = (email, password) => {
     setLoading(true);
@@ -187,6 +208,7 @@ export const AuthProvider = ({ children }) => {
       token,
       forgotPassword,
       config,
+      updateUser,
       addUser,
       enterCodeAndChangePassword,
     }),

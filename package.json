@@ -7,6 +7,7 @@
     "@testing-library/react": "^13.1.1",
     "@testing-library/user-event": "^13.5.0",
     "country-list-js": "^3.1.7",
+    "dateformat": "^5.0.3",
     "framer-motion": "^6.3.3",
     "mdbreact": "^5.2.0",
     "react": "^18.0.0",

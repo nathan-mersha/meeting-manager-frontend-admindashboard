@@ -48,3 +48,24 @@ export const uploadFile = async (image) => {
     })
     .catch((error) => alert(error.message));
 };
+
+export const changeUserStatus = async (user) => {
+  const requestOptions = {
+    method: "PUT",
+    headers: { "content-type": "application/json", "token": fetchToken() },
+    body: JSON.stringify(user),
+  };
+  return fetch(homeUrl + "server/user/admin/changeUserAccountStatus", requestOptions)
+    .then(async (response) => {
+      const json = await response.json();
+      console.log(json);
+      if (json["message"]) {
+        return "done";
+      } else {
+        return "error";
+        // alert(json["detail"]);
+      }
+    })
+    .catch((error) => alert(error.message));
+  
+  };

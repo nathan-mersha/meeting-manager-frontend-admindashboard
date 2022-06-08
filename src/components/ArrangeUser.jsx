@@ -3,7 +3,6 @@ import { TiArrowSortedDown } from "react-icons/ti";
 import { BiSearchAlt2 } from "react-icons/bi";
 import { MdVisibility } from "react-icons/md";
 import { FiEdit } from "react-icons/fi";
-import { MdDeleteSweep } from "react-icons/md";
 
 import { IoAddCircleOutline } from "react-icons/io5";
 import { useState } from "react";
@@ -18,6 +17,7 @@ let userData = [];
 function ArrangeUser() {
   const [addNewUser, setAddNewUser] = useState(false);
   const { config } = useAuth()
+  
   const [modalOpen, setModalOpen] = useRecoilState(modalState);
   const [modalType, setModalType] = useRecoilState(modalTypeState);
   const [postState, setPostState] = useRecoilState(getDataState);
@@ -30,6 +30,7 @@ function ArrangeUser() {
 
   const [userList, setUserList] = useState(userData);
   const [user, setUser] = useState(null);
+  const [reload, setReload] = useState(false);
 
   const searchUser = (search) => {
     const searchResult = userData.filter(
@@ -77,9 +78,12 @@ function ArrangeUser() {
       userData = await getListUser();
       setUserList(userData);
     };
-    fetchData().catch(console.error);
-  }, []);
+      fetchData().catch(console.error);
+    
 
+  }, [modalOpen]);
+
+  
 if(addNewUser&& user){
   return (
     <AddUser
@@ -266,8 +270,12 @@ if(addNewUser&& user){
             placeholder="Search"
             className="px-3 py-1 focus:outline-none bg-gray-200"
             onChange={(e) => {
+             
               setUserList(userData);
+              
+              
               searchUser(e.target.value);
+              
             }}
           />
         </div>

@@ -3,9 +3,26 @@ import { AiFillCar } from "react-icons/ai";
 import { MdDeleteSweep } from "react-icons/md";
 
 import { AiOutlineCloseCircle } from "react-icons/ai";
+import { changeUserStatus } from "../hooks/useUserData";
 
 function UserInfo({ userId, handleClose }) {
   const [userInfo, setUserInfo] = useState(userId);
+
+  const updaterData=async () =>{
+
+    var data={"id":userId.id,"isAccountDeactivated":!userId.isAccountDeactivated};
+    console.log(data);
+   const res=await changeUserStatus(data);
+
+   if(res==="done"){
+     alert("User status changed successfully");
+     setUserInfo({...data});
+     handleClose();
+   
+    }else{
+      alert("Something went wrong");
+    }
+  }
 
   // useEffect(
   //   () =>
@@ -143,7 +160,7 @@ function UserInfo({ userId, handleClose }) {
               <button
                   className=" flex items-center justify-center gap-x-2 py-2 rounded-xl text-sm px-8 bg-red-500 text-white"
                   onClick={() => {
-                    handleClose();
+                    updaterData();
                   }}
                 >
                   <MdDeleteSweep className="h-6 w-6 text-white" />
@@ -152,7 +169,7 @@ function UserInfo({ userId, handleClose }) {
                 :<button
                 className=" flex items-center justify-center gap-x-2 py-2 rounded-xl text-sm px-8 bg-blue-500 text-white"
                 onClick={() => {
-                  handleClose();
+                  updaterData();
                 }}
               >
                 <MdDeleteSweep className="h-6 w-6 text-white" />

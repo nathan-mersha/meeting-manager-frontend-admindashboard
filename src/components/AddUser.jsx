@@ -12,7 +12,7 @@ import { useFilePicker } from "use-file-picker";
 import useAuth from "../hooks/useAuth";
 import { uploadFile } from "../hooks/useUserData";
 import countryListJs from "country-list-js";
-
+import dateFormat from 'dateformat';
 function AddUser({ handleClose, user }) {
   const {
     register,
@@ -20,7 +20,7 @@ function AddUser({ handleClose, user }) {
     watch,
     formState: { errors },
   } = useForm();
-  const { addUser,config } = useAuth()
+  const { addUser,updateUser,config } = useAuth()
 
   var country_names = countryListJs.names();
   const onSubmit = async (data) => {
@@ -44,7 +44,7 @@ function AddUser({ handleClose, user }) {
       "email": data.email,
       "phoneNumber": data.phoneNumber,
       "gender": data.gender,
-      "dob": ""+startDate,
+      "dob": dateFormat(startDate, "dd/mm/yyyy"),
       "profilePicture": image,
       "planType": data.membershipLevel,
       "countryCode": data.countryCode,
@@ -53,8 +53,16 @@ function AddUser({ handleClose, user }) {
       
       }
     console.log(newUser);
-
-    const res= await addUser(newUser);
+    var res;
+    if(user){
+      console.log("update");
+      newUser.id=user.id;
+     res= await updateUser(newUser);
+    }else{
+      newUser.password=Math.random().toString(36).slice(2, 7);
+     res= await addUser(newUser);
+    }
+    
 
     if(res==="done"){
 
@@ -70,7 +78,7 @@ function AddUser({ handleClose, user }) {
   const [image, setImage] = useState(user?.profilePicture);
   const [oldImage, setOldImage] = useState("");
 
-  const [startDate, setStartDate] = useState();
+  const [startDate, setStartDate] = useState(user?.dob ?new Date(user?.dob): "");  
   const [openFileSelector, { filesContent, loading }] = useFilePicker({
     readAs: "DataURL",
     accept: "image/*",
@@ -309,7 +317,7 @@ function AddUser({ handleClose, user }) {
               )}
             </label>
             <label className="inline-block w-full">
-              <div className="border flex justify-between items-center px-2 rounded-xl h-10 bg-gray-200">
+              <div className="border flex justify-between w-full items-center px-2 rounded-xl h-10 bg-gray-200">
                 {/* <BiSearchAlt2 className="text-blue-500 h-5 w-5" /> */}
                 <input
                   type="number"
@@ -327,7 +335,7 @@ function AddUser({ handleClose, user }) {
               )}
             </label>
             <label className="inline-block w-full">
-              <div className="border flex justify-between items-center px-2 rounded-xl h-10 bg-gray-200">
+              <div className="border flex justify-between w-full items-center px-2 rounded-xl h-10 bg-gray-200">
                 {/* <BiSearchAlt2 className="text-blue-500 h-5 w-5" /> */}
                 <input
                   type="number"
@@ -362,7 +370,7 @@ function AddUser({ handleClose, user }) {
               )}
             </label>
 
-            <label className="inline-block w-full">
+            {/* <label className="inline-block w-full">
               <div className="border flex justify-between items-center px-2 rounded-xl h-10 bg-gray-200">
                 <input
                   type="text"
@@ -372,14 +380,15 @@ function AddUser({ handleClose, user }) {
                   onChange={(e) => {}}
                   {...register("city", { required: true })}
                 />
-                {/* <TiArrowSortedDown className="text-blue-500 h-5 w-5" /> */}
               </div>
               {errors.city && (
                 <p className="p-1 text-[13px] font-light  text-orange-500">
                   Please enter a valid City.
                 </p>
               )}
-            </label>
+            </label> 
+            
+            */}
 
             <label className="inline-block w-full">
               <select
