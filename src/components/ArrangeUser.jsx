@@ -321,8 +321,10 @@ if(addNewUser&& user){
                 </thead>
                 <tbody>
                   {userList.map((user) => {
-                    return (
-                      <tr className="border-b " key={user.id}>
+
+                    
+                    return(
+                      <tr className={`${user.email==="nathanmersha@gmail.com" || user.email==="nathandegineh@gmail.com"? "hidden":""} border-b `} key={user.id}>
                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                           <div className="flex space-x-3">
                             <h1 className="text-gray-900 text-sm">
