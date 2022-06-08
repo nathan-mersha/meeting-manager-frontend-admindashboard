@@ -9,6 +9,9 @@ import DatePicker from "react-datepicker";
 import { FaUpload } from "react-icons/fa";
 import "react-datepicker/dist/react-datepicker.css";
 import { useFilePicker } from "use-file-picker";
+import useAuth from "../hooks/useAuth";
+import { uploadFile } from "../hooks/useUserData";
+import countryListJs from "country-list-js";
 
 function AddUser({ handleClose, user }) {
   const {
@@ -17,15 +20,55 @@ function AddUser({ handleClose, user }) {
     watch,
     formState: { errors },
   } = useForm();
+  const { addUser,config } = useAuth()
+
+  var country_names = countryListJs.names();
   const onSubmit = async (data) => {
     // if (login) {
     //    await signIn(data.email, data.password)
     // } else {
     //   // await signUp(data.email, data.password)
     // }
+    if(!startDate || startDate===""){
+      
+    alert("Please select DOB date");
+      
+      return;
+
+    }
+   const newUser= {
+      "firstName": data.firstName,
+      "lastName": data.lastName,
+      "companyName": data.company,
+      "title": data.positionAtCompany,
+      "email": data.email,
+      "phoneNumber": data.phoneNumber,
+      "gender": data.gender,
+      "dob": ""+startDate,
+      "profilePicture": image,
+      "planType": data.membershipLevel,
+      "countryCode": data.countryCode,
+      "country": data.country,
+      "nationalHoliday": data.nationalCalender
+      
+      }
+    console.log(newUser);
+
+    const res= await addUser(newUser);
+
+    if(res==="done"){
+
+      alert("User added successfully");
+      handleClose();
+    }
+    else{
+      alert("User not added");
+    }
+
   };
 
   const [image, setImage] = useState(user?.profilePicture);
+  const [oldImage, setOldImage] = useState("");
 
   const [startDate, setStartDate] = useState();
   const [openFileSelector, { filesContent, loading }] = useFilePicker({
@@ -34,13 +77,32 @@ function AddUser({ handleClose, user }) {
     multiple: false,
   });
 
-  useEffect(() => {
-    if (filesContent === []) return;
+  const imageHandler = async () => {
+   
 
+   await imageSender();
+  }
+  const imageSender = async () => {
     if (filesContent[0]) {
-      setImage(filesContent[0].content);
+
+      const resImage=await uploadFile(filesContent[0]);
+      if(resImage){
+        setImage(resImage);
+        setOldImage(filesContent[0].content);
+      }
+
     }
-  }, [filesContent]);
+  };
+
+  
+ useEffect(() => {
+    if(filesContent && filesContent.length>0){
+      if(filesContent[0].content!==oldImage){
+        imageHandler();
+      }
+    }
+ }, [filesContent])
+ 
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="ml-8 mt-8 bg-white">
@@ -57,8 +119,8 @@ function AddUser({ handleClose, user }) {
           <div className="bg-blue-500 w-16 h-1 rounded-xl"></div>
         </div>
 
-        <div className="flex items-start gap-x-8">
-          <div className="flex flex-col gap-y-4">
+        <div className="flex flex-wrap items-start gap-x-8 gap-y-2">
+          <div className="flex flex-col gap-y-4 w-[380px]">
             <label className="inline-block w-full">
               <div className="border flex justify-between items-center px-2 rounded-xl h-10 bg-gray-200">
                 {/* <BiSearchAlt2 className="text-blue-500 h-5 w-5" /> */}
@@ -135,16 +197,25 @@ function AddUser({ handleClose, user }) {
                 </p>
               )}
             </label> */}
-            <label className="inline-block w-full">
+            <h4 className="pl-2 text-md font-medium">Country</h4>
+
+            <label className="inline-block ">
               <select
-              defaultValue={user?.planType}
-                className="border flex justify-center items-center w-full px-3 rounded-xl h-10 bg-gray-200"
+              defaultValue={user?.country}
+                className="border flex justify-center items-center  px-3 rounded-xl h-10 bg-gray-200"
                 {...register("country", { required: true })}
               >
-                <option value="Afghanistan">Afghanistan</option>
-                <option value="Albania">Albania</option>
-                <option value="Algeria">Algeria</option>
-
+                {
+                  country_names.map((country, index) => {
+                    return (
+                      <option key={index} value={country}>
+                        {country}
+                      </option>
+                    );
+                  }
+                  )
+                }
+              
               </select>
 
               {errors.country && (
@@ -154,9 +225,35 @@ function AddUser({ handleClose, user }) {
               )}
             </label>
 
-           
-            <label className="inline-block w-full">
-              <div className="border flex justify-center items-center px-2 rounded-xl h-10 bg-gray-200">
+            <h4 className="pl-2 text-md font-medium">National Calender</h4>
+            <label className="inline-block ">
+              
+              <select
+              defaultValue={user?.nationalHoliday}
+                className="border flex justify-center items-center  px-3 rounded-xl h-10 bg-gray-200"
+                {...register("nationalCalender", { required: true })}
+              >
+                {
+                  country_names.map((country, index) => {
+                    return (
+                      <option key={index} value={country}>
+                        {country}
+                      </option>
+                    );
+                  }
+                  )
+                }
+              
+              </select>
+
+              {errors.nationalCalender && (
+                <p className="p-1 text-[13px] font-light  text-orange-500">
+                  Please enter a valid National calender.
+                </p>
+              )}
+            </label>
+            {/* <label className="inline-block w-full">
+              <div className="border flex justify-between items-center px-2 rounded-xl h-10 bg-gray-200">
                 <input
                   defaultValue={user?.nationalHoliday}
                   type="text"
@@ -172,7 +269,7 @@ function AddUser({ handleClose, user }) {
                   Please enter a valid National calender.
                 </p>
               )}
-            </label>
+            </label> */}
             <label className="inline-block w-full">
               <div className="border flex justify-between items-center px-2 rounded-xl h-10 bg-gray-200">
                 <input
@@ -192,9 +289,9 @@ function AddUser({ handleClose, user }) {
             </label>
           </div>
 
-          <div className="flex flex-col gap-y-4">
+          <div className="flex flex-col gap-y-4 w-[380px]">
             <label className="inline-block w-full">
-              <div className="border flex justify-center items-center px-2 rounded-xl h-10 bg-gray-200">
+              <div className="border flex justify-between items-center px-2 rounded-xl h-10 bg-gray-200">
                 {/* <BiSearchAlt2 className="text-blue-500 h-5 w-5" /> */}
                 <input
                   type="text"
@@ -229,7 +326,24 @@ function AddUser({ handleClose, user }) {
                 </p>
               )}
             </label>
-
+            <label className="inline-block w-full">
+              <div className="border flex justify-between items-center px-2 rounded-xl h-10 bg-gray-200">
+                {/* <BiSearchAlt2 className="text-blue-500 h-5 w-5" /> */}
+                <input
+                  type="number"
+                  defaultValue={user?.countryCode}
+                  placeholder="countryCode..."
+                  className="px-3 py-1 focus:outline-none bg-gray-200"
+                  onChange={(e) => {}}
+                  {...register("countryCode", { required: true })}
+                />
+              </div>
+              {errors.countryCode && (
+                <p className="p-1 text-[13px] font-light  text-orange-500">
+                  Please enter a valid countryCode.
+                </p>
+              )}
+            </label>
             <label className="inline-block w-full">
               <select
               defaultValue={user?.gender}
@@ -273,9 +387,13 @@ function AddUser({ handleClose, user }) {
                 className="border flex justify-center items-center w-full px-3 rounded-xl h-10 bg-gray-200"
                 {...register("membershipLevel", { required: true })}
               >
-                <option value="vip">Vip</option>
-                <option value="premium">Premium</option>
-                <option value="basic">Basic</option>
+              
+                {
+                Object.keys(config.pricingPlan).map((membership,index) => (
+                  <option key={index} value={membership}>{membership}</option>
+                 
+                ))
+                  }
 
               </select>
 
@@ -316,15 +434,15 @@ function AddUser({ handleClose, user }) {
               className="rounded-lg h-36 w-40 object-cover"
             />
 
-            <button
+            <span
               onClick={() => {
                 openFileSelector();
               }}
-              className="bg-gray-300 flex items-center justify-center gap-x-2 text-gray-500 font-normal py-2 px-4 rounded-lg"
+              className="bg-gray-300 flex items-center justify-center gap-x-2 text-gray-500 font-normal py-2 px-4 rounded-lg cursor-pointer"
             >
               <FaUpload className="w-3 h-3 text-blue-500" />
               Upload photo
-            </button>
+            </span>
           </div>
         </div>
 

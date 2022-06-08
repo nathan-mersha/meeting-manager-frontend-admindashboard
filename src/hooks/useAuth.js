@@ -1,4 +1,11 @@
-import { createContext, useContext, useEffect, useMemo, useRef, useState } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { useNavigate } from "react-router-dom";
 import { fetchToken, fetchUser } from "../utils/fetchUser";
 import { getConfig, updateConfig } from "./useConfig";
@@ -16,7 +23,7 @@ export const AuthProvider = ({ children }) => {
   //   const router = useRouter()
   const homeUrl = "https://mmserver.ml/";
   const navigate = useNavigate();
-  const isMount=useRef();
+  const isMount = useRef();
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
   const [config, setConfig] = useState(null);
@@ -38,22 +45,40 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     // if(isMount.current)     return;
-  if(!token) return;
-      const configGet = async () => {
-        const configData = await getConfig();
-        if(configData){
-          
-          setConfig(configData);
-          // const configUpdate= await updateConfig(configData);
-        }
-
+    if (!token) return;
+    const configGet = async () => {
+      const configData = await getConfig();
+      if (configData) {
+        setConfig(configData);
+        // const configUpdate= await updateConfig(configData);
       }
+    };
 
-      configGet();
-      // isMount.current=true;
-
+    configGet();
+    // isMount.current=true;
   }, [token]);
 
+  const addUser = async (user) => {
+    setLoading(true);
+    const requestOptions = {
+      method: "POST",
+      headers: { "content-type": "application/json", "token": token },
+      body: JSON.stringify(user),
+    };
+    return fetch(homeUrl + "server/user/admin/create", requestOptions)
+      .then(async (response) => {
+        const json = await response.json();
+        console.log(json);
+        if (json["companyName"]) {
+          return "done";
+        } else {
+          return "error";
+          // alert(json["detail"]);
+        }
+      })
+      .catch((error) => alert(error.message))
+      .finally(() => setLoading(false));
+  };
 
   const signUp = (email, password) => {
     setLoading(true);
@@ -70,6 +95,7 @@ export const AuthProvider = ({ children }) => {
     //   .catch((error) => alert(error.message))
     //   .finally(() => setLoading(false))
   };
+
   const forgotPassword = async (email) => {
     setLoading(true);
     const requestOptions = {
@@ -96,11 +122,11 @@ export const AuthProvider = ({ children }) => {
     setLoading(true);
     const requestOptions = {
       method: "POST",
-      headers: { "content-type": "application/json"},
+      headers: { "content-type": "application/json" },
       body: JSON.stringify({
-        email:""+email,
-        reset_code:""+code,
-        new_password:""+newPassword
+        email: "" + email,
+        reset_code: "" + code,
+        new_password: "" + newPassword,
       }),
     };
     await fetch(homeUrl + "server/user/reset_password", requestOptions)
@@ -126,37 +152,29 @@ export const AuthProvider = ({ children }) => {
       headers: { "content-type": "application/json" },
       body: JSON.stringify({ emailOrPhoneNumber: email, password: password }),
     };
-     await fetch(
-      homeUrl + "server/user/login",
-      requestOptions
-    )
-    
-    .then(async (response) => {
-      const json = await response.json();
-      
-      if (json["token"]) {
-        localStorage.setItem("token", JSON.stringify(json["token"]));
-        localStorage.setItem("user", JSON.stringify(json["user"]));
-        setUser(json["user"]);
-        navigate("/", { replace: true });
-      } else {
-        console.log(json);
-  
-        alert(json["detail"]);
-      }
-    })
+    await fetch(homeUrl + "server/user/login", requestOptions)
+      .then(async (response) => {
+        const json = await response.json();
 
-    .catch((error) => alert(error.message))
-    .finally(() => setLoading(false));
+        if (json["token"]) {
+          localStorage.setItem("token", JSON.stringify(json["token"]));
+          localStorage.setItem("user", JSON.stringify(json["user"]));
+          setUser(json["user"]);
+          navigate("/", { replace: true });
+        } else {
+          console.log(json);
 
-   
+          alert(json["detail"]);
+        }
+      })
+
+      .catch((error) => alert(error.message))
+      .finally(() => setLoading(false));
   };
   const logout = async () => {
     setLoading(true);
     localStorage.clear();
     setLoading(false);
-
-  
   };
   const memoedValue = useMemo(
     () => ({
@@ -169,9 +187,10 @@ export const AuthProvider = ({ children }) => {
       token,
       forgotPassword,
       config,
+      addUser,
       enterCodeAndChangePassword,
     }),
-    [user,token, loading, error,config]
+    [user, token, loading, error, config]
   );
   return (
     <AuthContext.Provider value={memoedValue}>
