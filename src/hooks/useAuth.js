@@ -3,12 +3,11 @@ import {
   useContext,
   useEffect,
   useMemo,
-  useRef,
   useState,
 } from "react";
 import { useNavigate } from "react-router-dom";
 import { fetchToken, fetchUser } from "../utils/fetchUser";
-import { getConfig, updateConfig } from "./useConfig";
+import { getConfig } from "./useConfig";
 
 const AuthContext = createContext({
   user: null,
@@ -23,7 +22,6 @@ export const AuthProvider = ({ children }) => {
   //   const router = useRouter()
   const homeUrl = "https://mmserver.ml/";
   const navigate = useNavigate();
-  const isMount = useRef();
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
   const [config, setConfig] = useState(null);
