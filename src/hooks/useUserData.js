@@ -69,3 +69,24 @@ export const changeUserStatus = async (user) => {
     .catch((error) => alert(error.message));
   
   };
+
+  export const changeUserType = async (user) => {
+    const requestOptions = {
+      method: "PUT",
+      headers: { "content-type": "application/json", "token": fetchToken() },
+      body: JSON.stringify(user),
+    };
+    return fetch(homeUrl + "server/user/admin/changeUserAccountType", requestOptions)
+      .then(async (response) => {
+        const json = await response.json();
+        console.log(json);
+        if (json["message"]) {
+          return "done";
+        } else {
+          return "error";
+          // alert(json["detail"]);
+        }
+      })
+      .catch((error) => alert(error.message));
+    
+    };

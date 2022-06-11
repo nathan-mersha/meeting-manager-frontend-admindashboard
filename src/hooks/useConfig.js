@@ -16,13 +16,14 @@ export const  getConfig= async ()=>{
     return fetch(homeUrl + "server/config",requestOptions)
     .then(async (response) => {
        const json = await response.json();
-       
        return json;
+    }).catch((error) => {
+        localStorage.clear();
+        return null;
     });
 
 }
 export const  updateConfig= async (Config)=>{
-    console.log(Config);
     const requestOptions = {
         method: "PUT",
         mode: 'cors',

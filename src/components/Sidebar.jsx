@@ -103,7 +103,7 @@ const Sidebar = ({ closeToggle }) => {
             }
             icon={<BsCalendarCheck className="text-white" />}
           /> */}
-          <NavItem
+         { user.userType==="administrator" && (<NavItem
             to={"/PromoCode"}
             handelCloseSidebar={handelCloseSidebar}
             isActiveStyle={isActiveStyle}
@@ -116,9 +116,9 @@ const Sidebar = ({ closeToggle }) => {
                 : ""
             }
             icon={<BsCodeSlash className="text-white" />}
-          />
+          />)}
 
-          <NavItem
+          {user.userType==="administrator" && (<NavItem
             to={"/MembershipLevels"}
             handelCloseSidebar={handelCloseSidebar}
             isActiveStyle={isActiveStyle}
@@ -131,7 +131,7 @@ const Sidebar = ({ closeToggle }) => {
                 : ""
             }
             icon={<MdCardMembership className="text-white" />}
-          />
+          />)}
 
           
 
@@ -150,7 +150,7 @@ const Sidebar = ({ closeToggle }) => {
             icon={<FaUsers className="text-white" />}
           />
 
-          <NavItem
+          {user.userType==="administrator" && (<NavItem
             to={"/SystemUsers"}
             handelCloseSidebar={handelCloseSidebar}
             isActiveStyle={isActiveStyle}
@@ -163,7 +163,7 @@ const Sidebar = ({ closeToggle }) => {
                 : ""
             }
             icon={<FaUserEdit className="text-white" />}
-          />
+          />)}
         </div>
       </div>
     </div>

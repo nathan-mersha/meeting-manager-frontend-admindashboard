@@ -5,6 +5,7 @@ import { useRecoilValue } from "recoil";
 
 import { getDataState, handleDataState } from "../../atoms/postAtom";
 import UserInfo from "../UserInfo";
+import UserAssign from "../UserAssign";
 
 
 const dropIn = {
@@ -73,6 +74,8 @@ const Modal = ({ handleClose, type }) => {
               <CloseRoundedIcon className="h-7 w-7 dark:text-white/75" />
             </IconButton> 
           </div>*/}
+
+
 {/* 
           <AddNewOrder
             handleClose={handleClose}
@@ -94,7 +97,7 @@ const Modal = ({ handleClose, type }) => {
           exit="exit"
         >
           {/* <UserOrder handleClose={handleClose} order={post} />\ */}
-        <div></div>
+        <UserAssign handleClose={handleClose} post={post}/>
 
         </motion.div>
       )}

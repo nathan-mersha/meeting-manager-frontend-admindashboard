@@ -178,10 +178,15 @@ export const AuthProvider = ({ children }) => {
         const json = await response.json();
 
         if (json["token"]) {
+          if(json["userType"]==="user"){
+            alert("You are not authorized to login to this admin panel");
+          }
+          else{
           localStorage.setItem("token", JSON.stringify(json["token"]));
           localStorage.setItem("user", JSON.stringify(json["user"]));
           setUser(json["user"]);
           navigate("/", { replace: true });
+        }
         } else {
           console.log(json);
 

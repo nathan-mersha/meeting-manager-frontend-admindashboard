@@ -8,6 +8,7 @@ import NationalCalendars from "../components/NationalCalendars";
 import PromoCode from "../components/PromoCode";
 import MembershipLevels from "../components/MembershipLevels";
 import SystemConfig from "../components/SystemConfig";
+import SystemUser from "../components/SystemUser";
 
 function Home() {
     const isMount=useRef();
@@ -87,7 +88,7 @@ function Home() {
           )
         }else if (categoryData==="SystemUsers") {
           return (
-            <div>SystemUsers</div>
+            <SystemUser />
           )
         } else {
           return (

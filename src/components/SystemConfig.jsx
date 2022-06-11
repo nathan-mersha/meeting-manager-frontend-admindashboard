@@ -51,7 +51,7 @@ function SystemConfig() {
         <div className="flex items-start gap-x-8">
           <div className="flex flex-col gap-y-4">
             <h4 className="text-lg font-medium">
-              Set token Expiration In Day.
+              Set token Expiration In hours.
             </h4>
             <label className="inline-block w-full">
               <div className="border flex justify-between items-center px-2 rounded-xl h-10 bg-gray-200">

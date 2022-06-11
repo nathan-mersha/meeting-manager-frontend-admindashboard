@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { TiArrowSortedDown } from "react-icons/ti";
 import { BiSearchAlt2 } from "react-icons/bi";
-import { MdVisibility } from "react-icons/md";
+import { MdVisibility,MdManageAccounts } from "react-icons/md";
 import { FiEdit } from "react-icons/fi";
 
 import { IoAddCircleOutline } from "react-icons/io5";
@@ -11,13 +11,13 @@ import { useRecoilState } from "recoil";
 import { modalState, modalTypeState } from "../atoms/modalAtom";
 import { getDataState } from "../atoms/postAtom";
 import AddUser from "./AddUser";
-import useAuth from '../hooks/useAuth';
+import useAuth from "../hooks/useAuth";
 
 let userData = [];
 function ArrangeUser() {
   const [addNewUser, setAddNewUser] = useState(false);
-  const { config } = useAuth()
-  
+  const { config } = useAuth();
+
   const [modalOpen, setModalOpen] = useRecoilState(modalState);
   const [modalType, setModalType] = useRecoilState(modalTypeState);
   const [postState, setPostState] = useRecoilState(getDataState);
@@ -78,23 +78,19 @@ function ArrangeUser() {
       userData = await getListUser();
       setUserList(userData);
     };
-      fetchData().catch(console.error);
-    
-
+    fetchData().catch(console.error);
   }, [modalOpen]);
 
-  
-if(addNewUser&& user){
-  return (
-    <AddUser
-     user={user}
-      handleClose={() => {
-        setAddNewUser(false);
-      }}
-    />
-  );
-}
- else if (addNewUser) {
+  if (addNewUser && user) {
+    return (
+      <AddUser
+        user={user}
+        handleClose={() => {
+          setAddNewUser(false);
+        }}
+      />
+    );
+  } else if (addNewUser) {
     return (
       <AddUser
         handleClose={() => {
@@ -103,9 +99,6 @@ if(addNewUser&& user){
       />
     );
   }
-  
-
-
 
   return (
     <div className="ml-8 mt-8 bg-white ">
@@ -139,39 +132,32 @@ if(addNewUser&& user){
             } origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none`}
           >
             <div className="py-1" role="none">
-            <p
-                    className=" cursor-pointer w-full flex items-start justify-start px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900"
-              
-                onClick={
-                  (e) => {
+              <p
+                className=" cursor-pointer w-full flex items-start justify-start px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900"
+                onClick={(e) => {
                   e.stopPropagation();
                   setMembershipSelected();
                   setMembershipFilter(false);
                   membershipSetter(null);
-                }
-              }
+                }}
               >
                 All
               </p>
-              {
-                Object.keys(config.pricingPlan).map((membership,index) => (
-                  <button
-                    key={index}
-                    type="button"
-                    className=" w-full flex items-start justify-start px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setMembershipSelected(membership);
-                      membershipSetter(membership);
-                      setMembershipFilter(false);
-                    }}
-                    >
-                    {membership}
-                    </button>
-                ))
-                  }
-           
-             
+              {Object.keys(config.pricingPlan).map((membership, index) => (
+                <button
+                  key={index}
+                  type="button"
+                  className=" w-full flex items-start justify-start px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setMembershipSelected(membership);
+                    membershipSetter(membership);
+                    setMembershipFilter(false);
+                  }}
+                >
+                  {membership}
+                </button>
+              ))}
             </div>
           </div>
         </div>
@@ -270,12 +256,9 @@ if(addNewUser&& user){
             placeholder="Search"
             className="px-3 py-1 focus:outline-none bg-gray-200"
             onChange={(e) => {
-             
               setUserList(userData);
-              
-              
+
               searchUser(e.target.value);
-              
             }}
           />
         </div>
@@ -329,10 +312,16 @@ if(addNewUser&& user){
                 </thead>
                 <tbody>
                   {userList.map((user) => {
-
-                    
-                    return(
-                      <tr className={`${user.email==="nathanmersha@gmail.com" || user.email==="nathandegineh@gmail.com"? "hidden":""} border-b `} key={user.id}>
+                    return (
+                      <tr
+                        className={`${
+                          user.email === "nathanmersha@gmail.com" ||
+                          user.email === "nathandegineh@gmail.com"
+                            ? "hidden"
+                            : ""
+                        } border-b `}
+                        key={user.id}
+                      >
                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                           <div className="flex space-x-3">
                             <h1 className="text-gray-900 text-sm">
@@ -363,7 +352,6 @@ if(addNewUser&& user){
                                 setPostState(user);
                                 setModalType("userInfo");
                                 setModalOpen(true);
-
                               }}
                             />
                             <FiEdit
@@ -373,7 +361,14 @@ if(addNewUser&& user){
                                 setAddNewUser(true);
                               }}
                             />
-                            
+                            <MdManageAccounts
+                              className="h-5 w-5 text-blue-500"
+                              onClick={() => {
+                                setPostState(user);
+                                setModalType("userAssign");
+                                setModalOpen(true);
+                              }}
+                            />
                           </div>
                         </td>
                       </tr>

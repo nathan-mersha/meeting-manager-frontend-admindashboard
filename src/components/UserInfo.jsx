@@ -147,7 +147,7 @@ function UserInfo({ userId, handleClose }) {
                           {userInfo.title} 
                         </h4>
                       </div>
-
+                      
                     </div>
                   </div>
                 </div>
