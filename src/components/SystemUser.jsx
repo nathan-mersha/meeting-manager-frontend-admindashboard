@@ -6,26 +6,25 @@ import { FiEdit } from "react-icons/fi";
 
 import { IoAddCircleOutline } from "react-icons/io5";
 import { useState } from "react";
-import { getListUser } from "../hooks/useUserData";
+import { getListSuperUser, getListUser } from "../hooks/useUserData";
 import { useRecoilState } from "recoil";
 import { modalState, modalTypeState } from "../atoms/modalAtom";
 import { getDataState } from "../atoms/postAtom";
 import AddUser from "./AddUser";
 import useAuth from "../hooks/useAuth";
 
-let userData = [];
+let adminData = [];
 function SystemUser() {
   const [addNewUser, setAddNewUser] = useState(false);
-  const { config } = useAuth();
-
+  
   const [modalOpen, setModalOpen] = useRecoilState(modalState);
   const [modalType, setModalType] = useRecoilState(modalTypeState);
   const [postState, setPostState] = useRecoilState(getDataState);
-  const [userList, setUserList] = useState(userData);
+  const [userList, setUserList] = useState(adminData);
   const [user, setUser] = useState(null);
 
   const searchUser = (search) => {
-    const searchResult = userData.filter(
+    const searchResult = adminData.filter(
       (user) =>
         (user.email &&
           user.email
@@ -52,9 +51,9 @@ function SystemUser() {
   };
   useEffect(() => {
     const fetchData = async () => {
-    const newUserData = await getListUser();
-      userData=newUserData.filter(user=>user.userType!=='user');
-      setUserList(userData);
+    const newUserData = await getListSuperUser();
+    adminData=newUserData.filter(user=>user.userType!=='user');
+    setUserList(adminData);
     };
     fetchData().catch(console.error);
   }, [modalOpen]);
@@ -98,7 +97,7 @@ function SystemUser() {
             placeholder="Search"
             className="px-3 py-1 focus:outline-none bg-gray-200"
             onChange={(e) => {
-              setUserList(userData);
+              setUserList(adminData);
 
               searchUser(e.target.value);
             }}
