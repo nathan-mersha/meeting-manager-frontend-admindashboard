@@ -60,6 +60,10 @@ function ArrangeUser() {
         (user.planType &&
           user.planType
             .toLocaleLowerCase()
+            .startsWith(search.toLocaleLowerCase())) ||
+        (user.country &&
+          user.country
+            .toLocaleLowerCase()
             .startsWith(search.toLocaleLowerCase()))
     );
     setUserList(searchResult);
@@ -183,9 +187,10 @@ if(!config){
               ))}
             </div>
           </div>
+       
         </div>
 
-        <div className="relative inline-block text-left">
+        {/* <div className="relative inline-block text-left">
           <div className="">
             <button
               type="button"
@@ -252,7 +257,7 @@ if(!config){
               </p>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
 
       <div className="flex items-center justify-between">
