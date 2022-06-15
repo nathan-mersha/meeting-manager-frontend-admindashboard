@@ -150,6 +150,7 @@ function UserInfo({ userId, handleClose }) {
                         </h4>
                       </div>
 
+
                       <div className="flex items-center p-2 justify-between gap-x-2 border-b-2 border-gray-200">
                         <h4 className="w-1/2">Company</h4>
                         <h4 className="text-blue-500 ml-10 mr-10 font-normal text-xl">.</h4>
