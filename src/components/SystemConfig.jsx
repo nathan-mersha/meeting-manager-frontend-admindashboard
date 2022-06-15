@@ -24,7 +24,7 @@ function SystemConfig() {
     var xp= config;
       xp["tokenExpirationInDay"]=parseInt(data.day);
        await updateConfig(xp);
-       alert("token Expiration In Day has been updated to "+data.day);
+       alert("token Expiration In hours has been updated to "+data.day);
   
        
   };
@@ -44,7 +44,7 @@ function SystemConfig() {
     <form onSubmit={handleSubmit(onSubmit)} className="ml-8 mt-8 bg-white">
       <div className="flex flex-col items-start py-8 pl-8 gap-y-10">
         <div className="flex flex-col items-start">
-          <h4 className="text-black font-bold text-lg">PROMO CODE</h4>
+          <h4 className="text-black font-bold text-lg">System Config</h4>
           <div className="bg-blue-500 w-16 h-1 rounded-xl"></div>
         </div>
 
@@ -61,7 +61,7 @@ function SystemConfig() {
                   defaultValue={config.tokenExpirationInDay}
                   placeholder="token Expiration In Day..."
                   className="px-3 py-1 focus:outline-none bg-gray-200"
-                  {...register("day", { required: true })}
+                  {...register("day", { required: true, min: 0 })}
                   onChange={(e) => {}}
                 />
               </div>

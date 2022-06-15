@@ -1,28 +1,42 @@
 import React, { useEffect, useState } from "react";
-import { AiFillCar } from "react-icons/ai";
+import { FaUserEdit } from "react-icons/fa";
 import { MdDeleteSweep } from "react-icons/md";
 
 import { AiOutlineCloseCircle } from "react-icons/ai";
-import { changeUserStatus } from "../hooks/useUserData";
+import { changeUserStatus, deleteUser } from "../hooks/useUserData";
 
 function UserInfo({ userId, handleClose }) {
   const [userInfo, setUserInfo] = useState(userId);
 
-  const updaterData=async () =>{
-
-    var data={"id":userId.id,"isAccountDeactivated":!userId.isAccountDeactivated};
+  const updaterData = async () => {
+    var data = {
+      id: userId.id,
+      isAccountDeactivated: !userId.isAccountDeactivated,
+    };
     console.log(data);
-   const res=await changeUserStatus(data);
+    const res = await changeUserStatus(data);
 
-   if(res==="done"){
-     alert("User status changed successfully");
-     setUserInfo({...data});
-     handleClose();
-   
-    }else{
+    if (res === "done") {
+      alert("User status changed successfully");
+      setUserInfo({ ...data });
+      handleClose();
+    } else {
       alert("Something went wrong");
     }
-  }
+  };
+
+  const deleteUserHandle = async () => {
+    var data = { email: userId.email };
+    const res = await deleteUser(data);
+
+    if (res === "done") {
+      alert("User deleted successfully");
+      setUserInfo({ ...data });
+      handleClose();
+    } else {
+      alert("Something went wrong");
+    }
+  };
 
   // useEffect(
   //   () =>
@@ -70,84 +84,86 @@ function UserInfo({ userId, handleClose }) {
                     />
                   )}
 
-                  <div className="border-2 py-2 mt-4 rounded-tr-lg rounded-bl-lg ">
-                    <div className="fle flex-col items-center justify-center">
-                      <div className="flex items-center p-2 justify-center gap-x-2 border-b-2 border-gray-200">
-                        <h4 className="">Name</h4>
-                        <h4 className="text-blue-500 font-normal text-xl">.</h4>
-                        <h4 className="font-normal text-black">
+                  <div className="border-2 py-2 mt-4 rounded-tr-lg rounded-bl-lg w-full">
+                    <div className=" flex-col items-center justify-center">
+                      <div className="flex items-center p-2 justify-center  border-b-2 border-gray-200">
+                        <h4 className="w-1/2">Name</h4>
+                        <h4 className="text-blue-500 ml-10 mr-10 font-normal text-xl">
+                          .
+                        </h4>
+                        <h4 className="w-1/2 font-normal text-black">
                           {userInfo.firstName} {userInfo.lastName}
                         </h4>
                       </div>
-                      <div className="flex items-center p-2 justify-center gap-x-2 border-b-2 border-gray-200">
-                        <h4 className="">Email</h4>
-                        <h4 className="text-blue-500 font-normal text-xl">.</h4>
-                        <h4 className="font-normal text-black">
+                      <div className="flex items-center p-2 justify-center border-b-2 border-gray-200">
+                        <h4 className="w-1/2 ">Email</h4>
+                        <h4 className=" text-blue-500 ml-10 mr-10 font-normal text-xl">
+                          .
+                        </h4>
+                        <h4 className="w-1/2 font-normal text-black">
                           {userInfo.email}
                         </h4>
                       </div>
-                      <div className="flex items-center p-2 justify-center gap-x-2 border-b-2 border-gray-200">
-                        <h4 className="">Phone Number</h4>
-                        <h4 className="text-blue-500 font-normal text-xl">.</h4>
-                        <h4 className="font-normal text-black">
+                      <div className="flex items-center p-2 justify-between gap-x-2 border-b-2 border-gray-200">
+                        <h4 className="w-1/2">Phone Number</h4>
+                        <h4 className="text-blue-500 ml-10 mr-10 font-normal text-xl">.</h4>
+                        <h4 className="w-1/2 font-normal text-black">
                           {userInfo.phoneNumber}
                         </h4>
                       </div>
-                      <div className="flex items-center p-2 justify-center gap-x-2 border-b-2 border-gray-200">
-                        <h4 className="">DoB</h4>
-                        <h4 className="text-blue-500 font-normal text-xl">.</h4>
-                        <h4 className="font-normal text-black">
-                          {userInfo.dob} 
+                      <div className="flex items-center p-2 justify-between gap-x-2 border-b-2 border-gray-200">
+                        <h4 className="w-1/2">DoB</h4>
+                        <h4 className="text-blue-500 ml-10 mr-10 font-normal text-xl">.</h4>
+                        <h4 className="w-1/2 font-normal text-black">
+                          {userInfo.dob}
                         </h4>
                       </div>
-                      <div className="flex items-center p-2 justify-center gap-x-2 border-b-2 border-gray-200">
-                        <h4 className="">Gender</h4>
-                        <h4 className="text-blue-500 font-normal text-xl">.</h4>
-                        <h4 className="font-normal text-black">
-                          {userInfo.gender} 
-                        </h4>
-                      </div>
-
-                      <div className="flex items-center p-2 justify-center gap-x-2 border-b-2 border-gray-200">
-                        <h4 className="">Country</h4>
-                        <h4 className="text-blue-500 font-normal text-xl">.</h4>
-                        <h4 className="font-normal text-black">
-                          {userInfo.country} 
+                      <div className="flex items-center p-2 justify-between gap-x-2 border-b-2 border-gray-200">
+                        <h4 className="w-1/2">Gender</h4>
+                        <h4 className="text-blue-500 ml-10 mr-10 font-normal text-xl">.</h4>
+                        <h4 className="w-1/2 font-normal text-black">
+                          {userInfo.gender}
                         </h4>
                       </div>
 
-
-                      <div className="flex items-center p-2 justify-center gap-x-2 border-b-2 border-gray-200">
-                        <h4 className="">city</h4>
-                        <h4 className="text-blue-500 font-normal text-xl">.</h4>
-                        <h4 className="font-normal text-black">
-                          {userInfo.city} 
+                      <div className="flex items-center p-2 justify-between gap-x-2 border-b-2 border-gray-200">
+                        <h4 className="w-1/2">Country</h4>
+                        <h4 className="text-blue-500 ml-10 mr-10 font-normal text-xl">.</h4>
+                        <h4 className="w-1/2 font-normal text-black">
+                          {userInfo.country}
                         </h4>
                       </div>
 
-                      <div className="flex items-center p-2 justify-center gap-x-2 border-b-2 border-gray-200">
-                        <h4 className="">Membership</h4>
-                        <h4 className="text-blue-500 font-normal text-xl">.</h4>
-                        <h4 className="font-normal text-black">
-                          {userInfo.planType} 
+                      <div className="flex items-center p-2 justify-between gap-x-2 border-b-2 border-gray-200">
+                        <h4 className="w-1/2">city</h4>
+                        <h4 className="text-blue-500 ml-10 mr-10 font-normal text-xl">.</h4>
+                        <h4 className="w-1/2 font-normal text-black">
+                          {userInfo.city}
                         </h4>
                       </div>
 
-                      <div className="flex items-center p-2 justify-center gap-x-2 border-b-2 border-gray-200">
-                        <h4 className="">Company</h4>
-                        <h4 className="text-blue-500 font-normal text-xl">.</h4>
-                        <h4 className="font-normal text-black">
-                          {userInfo.companyName} 
+                      <div className="flex items-center p-2 justify-between gap-x-2 border-b-2 border-gray-200">
+                        <h4 className="w-1/2">Membership</h4>
+                        <h4 className="text-blue-500 ml-10 mr-10 font-normal text-xl">.</h4>
+                        <h4 className="w-1/2 font-normal text-black">
+                          {userInfo.planType}
                         </h4>
                       </div>
-                      <div className="flex items-center p-2 justify-center gap-x-2 ">
-                        <h4 className="">Position</h4>
-                        <h4 className="text-blue-500 font-normal text-xl">.</h4>
-                        <h4 className="font-normal text-black">
-                          {userInfo.title} 
+
+                      <div className="flex items-center p-2 justify-between gap-x-2 border-b-2 border-gray-200">
+                        <h4 className="w-1/2">Company</h4>
+                        <h4 className="text-blue-500 ml-10 mr-10 font-normal text-xl">.</h4>
+                        <h4 className="w-1/2 font-normal text-black">
+                          {userInfo.companyName}
                         </h4>
                       </div>
-                      
+                      <div className="flex items-center p-2 justify-between gap-x-2 ">
+                        <h4 className="w-1/2">Position</h4>
+                        <h4 className="text-blue-500 ml-10 mr-10 font-normal text-xl">.</h4>
+                        <h4 className="w-1/2 font-normal text-black">
+                          {userInfo.title}
+                        </h4>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -155,30 +171,38 @@ function UserInfo({ userId, handleClose }) {
             </div>
 
             <div className="w-full  ">
-              <div className="flex items-center justify-center p-5">
-              { !userInfo.isAccountDeactivated?
-              <button
-                  className=" flex items-center justify-center gap-x-2 py-2 rounded-xl text-sm px-8 bg-red-500 text-white"
+              <div className="w-full flex items-center  justify-between space-x-3 p-5">
+                {!userInfo.isAccountDeactivated ? (
+                  <button
+                    className=" flex items-center justify-center gap-x-2 py-2 rounded-xl text-sm px-8 bg-red-500 text-white"
+                    onClick={() => {
+                      updaterData();
+                    }}
+                  >
+                    <FaUserEdit className="h-6 w-6 text-white" />
+                    Deactivate
+                  </button>
+                ) : (
+                  <button
+                    className=" flex items-center justify-center gap-x-2 py-2 rounded-xl text-sm px-8 bg-blue-500 text-white"
+                    onClick={() => {
+                      updaterData();
+                    }}
+                  >
+                    <FaUserEdit className="h-6 w-6 text-white" />
+                    Activate
+                  </button>
+                )}
+
+                <button
+                  className=" flex items-center justify-center gap-x-2 py-2 rounded-xl text-sm px-8 bg-gray-500 text-white"
                   onClick={() => {
-                    updaterData();
+                    deleteUserHandle();
                   }}
                 >
                   <MdDeleteSweep className="h-6 w-6 text-white" />
-                  Deactivate
+                  Delete User
                 </button>
-                :<button
-                className=" flex items-center justify-center gap-x-2 py-2 rounded-xl text-sm px-8 bg-blue-500 text-white"
-                onClick={() => {
-                  updaterData();
-                }}
-              >
-                <MdDeleteSweep className="h-6 w-6 text-white" />
-                Activate
-              </button>
-              
-              }
-
-                
               </div>
             </div>
           </div>

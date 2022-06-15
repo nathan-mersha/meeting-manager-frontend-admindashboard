@@ -35,6 +35,7 @@ function ArrangeUser() {
   const [page,setPage] =useState(1);
   const [noRow,setNoRow] =useState(12);
   const [loading,setLoading] =useState(false);
+  const [reLoad,setReLoad] =useState(false);
   const navigate = useNavigate();
 
 
@@ -102,18 +103,20 @@ function ArrangeUser() {
       setLoading(false);
     };
     fetchData().catch(console.error);
-  }, [modalOpen,page,noRow]);
+  }, [modalOpen,page,noRow,reLoad]);
 
 if(!config){
   navigate("/", { replace: true });
 }
 
   if (addNewUser && user) {
+    
     return (
       <AddUser
         user={user}
         handleClose={() => {
           setAddNewUser(false);
+          setReLoad(!reLoad);
         }}
       />
     );
@@ -122,6 +125,8 @@ if(!config){
       <AddUser
         handleClose={() => {
           setAddNewUser(false);
+          setReLoad(!reLoad);
+
         }}
       />
     );
