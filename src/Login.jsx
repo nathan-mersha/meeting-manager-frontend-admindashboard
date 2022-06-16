@@ -4,12 +4,17 @@ import {  useForm } from 'react-hook-form'
 import useAuth from './hooks/useAuth';
 import { FiLogIn } from 'react-icons/fi';
 import { useNavigate } from 'react-router-dom';
+import { MdVisibility } from 'react-icons/md';
+import { AiFillEyeInvisible } from 'react-icons/ai';
+
 function Login() {
 const  navigate = useNavigate();
   const [login, setLogin] = useState(false)
   const [email, setEmail] = useState(null)
   const [password, setPassword] = useState(null)
   const { signIn } = useAuth()
+  const [showInput, setShowInput] = useState(false)
+
   const {
     register,
     handleSubmit,
@@ -78,12 +83,19 @@ useEffect(() => {
             )}
           </label>
           <label className="inline-block w-full">
+            
+            <div className='relative flex'>
             <input
-              type="password"
+              type={showInput?"text":"password"}
               placeholder="Password"
-              className="input"
+              className="input form-input w-full"
               {...register('password', { required: true })}
             />
+            {
+           !showInput ? <AiFillEyeInvisible className='absolute top-1/2 transform -translate-y-1/2 right-3' onClick={()=> {setShowInput(!showInput)}}/>
+          :<MdVisibility className=' absolute top-1/2 transform -translate-y-1/2 right-3' onClick={()=> {setShowInput(!showInput)}}/>
+          }
+            </div>
 
             {errors.password && (
               <p className="p-1 text-[13px] font-light  text-orange-500">

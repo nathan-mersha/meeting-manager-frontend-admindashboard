@@ -3,13 +3,18 @@ import { useEffect, useState } from 'react'
 import {  useForm } from 'react-hook-form'
 import useAuth from './hooks/useAuth';
 import { FaSave } from 'react-icons/fa';
+import { MdVisibility } from 'react-icons/md';
+import { AiFillEyeInvisible } from 'react-icons/ai';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 function ChangePassword() {
     const  navigate = useNavigate();
   const [login, setLogin] = useState(false)
   const location = useLocation();
-
+  
+  const [showInput, setShowInput] = useState(false)
+  const [showInputConfirm, setShowInputConfirm] = useState(false)
+  
   const [newPassword, setNewPassword] = useState(null)
   const [confirmPassword, setConfirmPassword] = useState(null)
   const {  enterCodeAndChangePassword } = useAuth()
@@ -70,12 +75,21 @@ useEffect(() => {
   </div>
       <div className="space-y-4">
         <label className="inline-block w-full">
+          <div className=' relative flex'>
           <input
-            type="password"
+            type={showInput?'text':'password'} 
             placeholder="New Password"
             className="input"
             {...register('newPassword', { required: true })}
           />
+          
+          {
+           !showInput ? <AiFillEyeInvisible className='absolute top-1/2 transform -translate-y-1/2 right-3' onClick={()=> {setShowInput(!showInput)}}/>
+          :<MdVisibility className=' absolute top-1/2 transform -translate-y-1/2 right-3' onClick={()=> {setShowInput(!showInput)}}/>
+          }
+          
+          </div>
+          
           {errors.newPassword && (
             <p className="p-1 text-[13px] font-light  text-orange-500">
               Your password must contain between 4 and 60 characters.
@@ -83,12 +97,21 @@ useEffect(() => {
           )}
         </label>
         <label className="inline-block w-full">
+          <div className=' relative flex'>
           <input
-            type="password"
+            type={showInputConfirm?'text':"password"}
             placeholder="Confirm Password"
             className="input"
             {...register('confirmPassword', { required: true } )}
           />
+
+           {
+           !showInputConfirm ? <AiFillEyeInvisible className='absolute top-1/2 transform -translate-y-1/2 right-3' onClick={()=> {setShowInputConfirm(!showInputConfirm)}}/>
+          :<MdVisibility className=' absolute top-1/2 transform -translate-y-1/2 right-3' onClick={()=> {setShowInputConfirm(!showInputConfirm)}}/>
+          }
+          
+          </div>
+          
 
           {errors.confirmPassword && (
             <p className="p-1 text-[13px] font-light  text-orange-500">
