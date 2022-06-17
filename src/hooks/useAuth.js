@@ -32,14 +32,14 @@ export const AuthProvider = ({ children }) => {
     const token = fetchToken();
     const user = fetchUser();
     setInitialLoading(false);
-    if (!user && !token) {
+    if (!user || !token) {
       navigate("/login", { replace: true });
     } else {
       setUser(user);
       setToken(token);
-      navigate("/", { replace: true });
+      // navigate("/", { replace: true });
     }
-  }, [fetchToken()]);
+  }, [fetchToken(),navigate]);
 
   useEffect(() => {
     // if(isMount.current)     return;
