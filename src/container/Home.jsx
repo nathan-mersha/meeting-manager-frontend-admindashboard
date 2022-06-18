@@ -9,9 +9,11 @@ import PromoCode from "../components/PromoCode";
 import MembershipLevels from "../components/MembershipLevels";
 import SystemConfig from "../components/SystemConfig";
 import SystemUser from "../components/SystemUser";
+import useAuth from "../hooks/useAuth";
 
 function Home() {
     const isMount=useRef();
+    const { user} = useAuth();
     const  {categoryId} = useParams();
   const [categoryData, setCategoryData] = useState("Home");
   useEffect(() => {
@@ -41,11 +43,17 @@ function Home() {
           className='cursor-pointer '
           onClick={() => setToggleSidebar(true)}
         />
-          <span className="w-28 text-2xl font-serif">Logo</span>
-
+              <img
+        src="../arrange_WHITE_logo.svg"
+        className="flex w-full h-[100px] text-2xl font-serif items-center justify-center"
+        width={25}
+        alt="sa"
+        height={25}
+      />
        
         <img
-          src='https://th.bing.com/th/id/R.0cfe3cb86925753834d56c792931315c?rik=GA0RqPxgQyA0KA&pid=ImgRaw&r=0'
+          src= {user?.profilePicture?user?.profilePicture : "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png"}
+          
           alt='logo'
           className='w-9 h-9 rounded-full'
         />
