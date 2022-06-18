@@ -53,13 +53,15 @@ export const getListSuperUser = async (limit = 25, page = 1) => {
 };
 
 export const uploadFile = async (image) => {
-  const formDate = new FormData();
-  formDate.append("file", image, image.name);
+  const formData = new FormData();
+  // formData.append("name", image.name);
+  formData.append("file", image);
   const requestOptions = {
     method: "POST",
-    headers: { Accept: "multipart/form-data", token: fetchToken() },
-    body: formDate,
+    headers: {  token: fetchToken() },
+    body: formData,
   };
+  console.log(requestOptions);
   return fetch(homeUrl + "server/user/uploadfile", requestOptions)
     .then(async (response) => {
       const json = await response.json();

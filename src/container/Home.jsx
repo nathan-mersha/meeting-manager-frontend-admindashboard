@@ -45,11 +45,9 @@ function Home() {
         />
               <img
         src="../arrange_WHITE_logo.svg"
-        className="flex w-full h-[100px] text-2xl font-serif items-center justify-center"
-        width={25}
+        className="flex w-[25px] h-[25px] text-2xl font-serif items-center justify-center"
         alt="sa"
-        height={25}
-      />
+       />
        
         <img
           src= {user?.profilePicture?user?.profilePicture : "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png"}
