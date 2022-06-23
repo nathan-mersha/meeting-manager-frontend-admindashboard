@@ -11,6 +11,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useFilePicker } from "use-file-picker";
 import useAuth from "../hooks/useAuth";
 import { updateConfig } from "../hooks/useConfig";
+import { useNavigate } from "react-router-dom";
 
 function SystemConfig() {
   const {
@@ -37,7 +38,17 @@ function SystemConfig() {
     console.log(e.target.value);
     setValue(e.target.value);
   };
-
+  const navigate = useNavigate();
+  useEffect(() => {
+    if(!config){
+      navigate("/", { replace: true });
+    }
+    
+  }, );
+  
+  if(!config){
+    return <div>Loading...</div>;
+  }
 
 
   return (

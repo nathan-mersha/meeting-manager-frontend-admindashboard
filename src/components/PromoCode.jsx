@@ -11,6 +11,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useFilePicker } from "use-file-picker";
 import useAuth from "../hooks/useAuth";
 import { updateConfig } from "../hooks/useConfig";
+import { useNavigate } from "react-router-dom";
 
 function PromoCode() {
   const {
@@ -20,22 +21,30 @@ function PromoCode() {
     formState: { errors },
   } = useForm();
   const onSubmit = async () => {
-      var xp= config;
-      xp["promoPeriod"]=parseInt(value);
-       await updateConfig(xp);
-       alert("promo period updated to "+value+" months");
+    var xp = config;
+    xp["promoPeriod"] = parseInt(value);
+    await updateConfig(xp);
+    alert("promo period updated to " + value + " months");
   };
   const { config } = useAuth();
 
-  const [value, setValue] = useState( config["promoPeriod"]);
+  const [value, setValue] = useState(config["promoPeriod"]);
 
   const handleChange = (e) => {
-      
     console.log(e.target.value);
     setValue(e.target.value);
   };
 
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!config) {
+      navigate("/", { replace: true });
+    }
+  });
 
+  if (!config) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="ml-8 mt-8 bg-white">

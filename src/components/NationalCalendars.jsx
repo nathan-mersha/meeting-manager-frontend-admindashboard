@@ -14,6 +14,7 @@ import { getDataState } from "../atoms/postAtom";
 import AddUser from "./AddUser";
 import useAuth from '../hooks/useAuth';
 import AddCalender from "./AddCalender";
+import { useNavigate } from "react-router-dom";
 
 let userData = [];
 
@@ -81,7 +82,17 @@ function NationalCalendars() {
       };
       fetchData().catch(console.error);
     }, []);
-  
+    const navigate = useNavigate();
+    useEffect(() => {
+      if(!config){
+        navigate("/", { replace: true });
+      }
+      
+    }, );
+    
+    if(!config){
+      return <div>Loading...</div>;
+    }
   if(addNewUser&& user){
     return (
       <AddCalender

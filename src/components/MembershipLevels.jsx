@@ -14,6 +14,7 @@ import { getDataState } from "../atoms/postAtom";
 import AddUser from "./AddUser";
 import useAuth from "../hooks/useAuth";
 import AddMembership from "./AddMembership";
+import { useNavigate } from "react-router-dom";
 
 let userData = [];
 function MembershipLevels() {
@@ -46,6 +47,18 @@ function MembershipLevels() {
       setUserList(filterResult);
     }
   };
+  const navigate = useNavigate();
+  useEffect(() => {
+    if(!config){
+      navigate("/", { replace: true });
+    }
+    
+  }, );
+  
+  if(!config){
+    return <div>Loading...</div>;
+  }
+
 
   if (addNewUser && user) {
     return (

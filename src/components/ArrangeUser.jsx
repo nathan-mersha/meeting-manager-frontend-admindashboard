@@ -12,9 +12,9 @@ import { modalState, modalTypeState } from "../atoms/modalAtom";
 import { getDataState } from "../atoms/postAtom";
 import AddUser from "./AddUser";
 import useAuth from "../hooks/useAuth";
-import { Spinner } from "react-spinner-animated";
 import { useNavigate } from "react-router-dom";
-
+import dateFormat from 'dateformat';
+import ReactTimeAgo from "react-time-ago";
 let userData = [];
 function ArrangeUser() {
   const [addNewUser, setAddNewUser] = useState(false);
@@ -27,8 +27,6 @@ function ArrangeUser() {
   const [membershipFilter, setMembershipFilter] = useState(false);
   const [membershipSelected, setMembershipSelected] = useState(null);
 
-  const [countryFilter, setCountryFilter] = useState(false);
-  const [countrySelected, setCountrySelected] = useState(null);
 
   const [userList, setUserList] = useState(userData);
   const [user, setUser] = useState(null);
@@ -37,8 +35,10 @@ function ArrangeUser() {
   const [loading,setLoading] =useState(false);
   const [reLoad,setReLoad] =useState(false);
   const navigate = useNavigate();
-
-
+  const month =new Date().getMonth() + 1;
+  const year =new Date().getFullYear();
+  const dateMonth=month+"/"+year;
+                          
   const searchUser = (search) => {
     const searchResult = userData.filter(
       (user) =>
@@ -98,16 +98,24 @@ function ArrangeUser() {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      userData = await getListUser(noRow,page);
+      userData = await getListUser(noRow,page); 
       setUserList(userData);
       setLoading(false);
     };
     fetchData().catch(console.error);
   }, [modalOpen,page,noRow,reLoad]);
 
-if(!config){
-  navigate("/", { replace: true });
-}
+  useEffect(() => {
+    if(!config){
+      navigate("/", { replace: true });
+    }
+    
+  }, [config]);
+  
+  if(!config){
+    return <div>Loading...</div>;
+
+  }
 
   if (addNewUser && user) {
     
@@ -339,6 +347,24 @@ if(!config){
                       scope="col"
                       className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
                     >
+                    Total Meetings Created
+                    </th>
+                    <th
+                      scope="col"
+                      className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
+                    >
+                      Meetings created this month
+                    </th>
+                    <th
+                      scope="col"
+                      className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
+                    >
+                      Created At
+                    </th>
+                    <th
+                      scope="col"
+                      className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
+                    >
                       Actions
                     </th>
                   </tr>
@@ -376,7 +402,20 @@ if(!config){
                         <td className="font-medium text-gray-700 px-6 py-4 whitespace-nowrap">
                           {user.country}
                         </td>
-
+                        <td className="font-medium text-gray-700 px-6 py-4 whitespace-nowrap">
+                          {/* get the current month */}
+                           
+                          {user.meetingMouth===dateMonth ? user.meetingInAMouth : "0" }
+                        </td>
+                        <td className="font-medium text-gray-700 px-6 py-4 whitespace-nowrap">
+                          {user.meetingTotal}
+                        </td>
+                        <td className="font-medium text-gray-700 px-6 py-4 whitespace-nowrap">
+                          {/* format datetime to mm/dd/yyyy */}
+                          {/* {dateFormat(user.firstModified, "dd/mm/yyyy")} */}
+                          <ReactTimeAgo date={user.firstModified} locale="en-US"/>
+                          
+                        </td>
                         <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                           <div className="flex items-center justify-between">
                             <MdVisibility
