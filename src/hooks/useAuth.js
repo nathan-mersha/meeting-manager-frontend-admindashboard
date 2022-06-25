@@ -178,7 +178,7 @@ export const AuthProvider = ({ children }) => {
         const json = await response.json();
 
         if (json["token"]) {
-          if(json["userType"]==="user"){
+          if(json["user"]["userType"]==="user"){
             alert("You are not authorized to login to this admin panel");
           }
           else{
