@@ -404,17 +404,16 @@ function ArrangeUser() {
                         </td>
                         <td className="font-medium text-gray-700 px-6 py-4 whitespace-nowrap">
                           {/* get the current month */}
-                           
-                          {user.meetingMouth===dateMonth ? user.meetingInAMouth : "0" }
+                          {user.meetingTotal}                           
                         </td>
                         <td className="font-medium text-gray-700 px-6 py-4 whitespace-nowrap">
-                          {user.meetingTotal}
+                          {user.meetingMouth===dateMonth ? user.meetingInAMouth : "0" }
+
                         </td>
                         <td className="font-medium text-gray-700 px-6 py-4 whitespace-nowrap">
                           {/* format datetime to mm/dd/yyyy */}
                           {/* {dateFormat(user.firstModified, "dd/mm/yyyy")} */}
                           <ReactTimeAgo date={user.firstModified} locale="en-US"/>
-                          
                         </td>
                         <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                           <div className="flex items-center justify-between">
