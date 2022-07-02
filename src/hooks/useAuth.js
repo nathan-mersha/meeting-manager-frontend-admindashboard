@@ -1,10 +1,4 @@
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { fetchToken, fetchUser } from "../utils/fetchUser";
 import { getConfig } from "./useConfig";
@@ -39,7 +33,7 @@ export const AuthProvider = ({ children }) => {
       setToken(token);
       // navigate("/", { replace: true });
     }
-  }, [fetchToken(),navigate]);
+  }, [fetchToken()]);
 
   useEffect(() => {
     // if(isMount.current)     return;
@@ -49,7 +43,7 @@ export const AuthProvider = ({ children }) => {
       if (configData) {
         setConfig(configData);
         // const configUpdate= await updateConfig(configData);
-      }else{
+      } else {
         logout();
       }
     };
@@ -62,7 +56,7 @@ export const AuthProvider = ({ children }) => {
     setLoading(true);
     const requestOptions = {
       method: "POST",
-      headers: { "content-type": "application/json", "token": token },
+      headers: { "content-type": "application/json", token: token },
       body: JSON.stringify(user),
     };
     return fetch(homeUrl + "server/user/admin/create", requestOptions)
@@ -83,10 +77,13 @@ export const AuthProvider = ({ children }) => {
     setLoading(true);
     const requestOptions = {
       method: "PUT",
-      headers: { "content-type": "application/json", "token": token },
+      headers: { "content-type": "application/json", token: token },
       body: JSON.stringify(user),
     };
-    return fetch(homeUrl + "server/user/admin/update_user/"+user.id, requestOptions)
+    return fetch(
+      homeUrl + "server/user/admin/update_user/" + user.id,
+      requestOptions
+    )
       .then(async (response) => {
         const json = await response.json();
         console.log(json);
@@ -178,15 +175,14 @@ export const AuthProvider = ({ children }) => {
         const json = await response.json();
 
         if (json["token"]) {
-          if(json["user"]["userType"]==="user"){
+          if (json["user"]["userType"] === "user") {
             alert("You are not authorized to login to this admin panel");
+          } else {
+            localStorage.setItem("token", JSON.stringify(json["token"]));
+            localStorage.setItem("user", JSON.stringify(json["user"]));
+            setUser(json["user"]);
+            navigate("/", { replace: true });
           }
-          else{
-          localStorage.setItem("token", JSON.stringify(json["token"]));
-          localStorage.setItem("user", JSON.stringify(json["user"]));
-          setUser(json["user"]);
-          navigate("/", { replace: true });
-        }
         } else {
           console.log(json);
 

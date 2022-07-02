@@ -57,12 +57,12 @@ useEffect(() => {
       <div className='flex items-center justify-center'>
 
       <img
-      src="https://www.carlogos.org/logo/MG-logo-red-2010-1920x1080.png"
-      className=" cursor-pointer object-contain md:left-10 md:top-6"
-      width={150}
-      alt="sa"
-      height={150}
-    />
+        src="../arrange_BLUE_logo.svg"
+        className=" cursor-pointer object-contain md:left-10 md:top-6"
+        width={150}
+        alt="sa"
+        height={150}
+      />
       </div>
  
     <div className='flex flex-col items-end'>
