@@ -209,6 +209,7 @@ export const AuthProvider = ({ children }) => {
       token,
       forgotPassword,
       config,
+      setConfig,
       updateUser,
       addUser,
       enterCodeAndChangePassword,

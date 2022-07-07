@@ -20,6 +20,7 @@ function PromoCode() {
     watch,
     formState: { errors },
   } = useForm();
+ 
   const onSubmit = async () => {
     var xp = config;
     xp["promoPeriod"] = parseInt(value);
@@ -27,24 +28,25 @@ function PromoCode() {
     alert("promo period updated to " + value + " months");
   };
   const { config } = useAuth();
-
-  const [value, setValue] = useState(config["promoPeriod"]);
-
-  const handleChange = (e) => {
-    console.log(e.target.value);
-    setValue(e.target.value);
-  };
-
   const navigate = useNavigate();
   useEffect(() => {
     if (!config) {
       navigate("/", { replace: true });
     }
-  });
+  },);
+
+  
+  const [value, setValue] = useState(config && config["promoPeriod"]);
 
   if (!config) {
     return <div>Loading...</div>;
   }
+  const handleChange = (e) => {
+    console.log(e.target.value);
+    setValue(e.target.value);
+  };
+
+
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="ml-8 mt-8 bg-white">

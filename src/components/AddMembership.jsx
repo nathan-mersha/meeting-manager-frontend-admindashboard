@@ -19,23 +19,26 @@ function AddMembership({ handleClose, user }) {
     watch,
     formState: { errors },
   } = useForm();
-  const { config } = useAuth()
+  const { config ,setConfig} = useAuth();
 
   const onSubmit = async (data) => {
-
-    var xp= config;
-    xp.pricingPlan[data.name]=data;
-     await updateConfig(xp);
-
-     handleClose();
+    var xp = config;
+    if(user?.name){
+      xp.pricingPlan[user?.name] = data;
+    }else{
+      xp.pricingPlan[data?.name] = data;
+    }
     
-
-
-
+    await updateConfig(xp);
+    handleClose();
   };
 
-
-
+  const onDeleteData = async () => {
+    var xp = config;
+    delete xp.pricingPlan[user?.name];
+    await updateConfig(xp);
+    handleClose();
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="ml-8 mt-8 bg-white">
@@ -57,9 +60,12 @@ function AddMembership({ handleClose, user }) {
             <label className="inline-block w-full">
               <div className="border flex justify-between items-center px-2 rounded-xl h-10 bg-gray-200">
                 {/* <BiSearchAlt2 className="text-blue-500 h-5 w-5" /> */}
+                
+                
                 <input
                   type="text"
                   defaultValue={user?.name}
+                  //disabled={user?.name && true}
                   placeholder="Membership Name..."
                   className="px-3 py-1 focus:outline-none bg-gray-200"
                   {...register("name", { required: true })}
@@ -91,10 +97,6 @@ function AddMembership({ handleClose, user }) {
               )}
             </label>
 
-        
-
-
-           
             <label className="inline-block w-full">
               <div className="border flex justify-center items-center px-2 rounded-xl h-10 bg-gray-200">
                 <input
@@ -105,7 +107,6 @@ function AddMembership({ handleClose, user }) {
                   onChange={(e) => {}}
                   {...register("allowedNoOfActiveMeetings", { required: true })}
                 />
-              
               </div>
               {errors.allowedNoOfActiveMeetings && (
                 <p className="p-1 text-[13px] font-light  text-orange-500">
@@ -169,28 +170,29 @@ function AddMembership({ handleClose, user }) {
                 </p>
               )}
             </label>
-
-
-
-        
-
-    
           </div>
-
-        
         </div>
-
-        <button
-          type="submit"
-          className="rounded-lg  bg-blue-500 py-2 px-4 text-white font-medium flex items-center justify-center gap-x-2"
-        >
-          <FiSave className="w-5 h-5 text-white" />
-          Save Membership 
-        </button>
+        <div className="flex w-full justify-between">
+          <button
+            type="submit"
+            className="rounded-lg  bg-blue-500 py-2 px-4 text-white font-medium flex items-center justify-center gap-x-2"
+          >
+            <FiSave className="w-5 h-5 text-white" />
+            Save Membership
+          </button>
+          <div
+            onClick={() => {
+              onDeleteData();
+            }}
+            className="rounded-lg cursor-pointer  bg-red-500 py-2 px-4 text-white font-medium flex items-center justify-center gap-x-2"
+          >
+            <FiSave className="w-5 h-5 text-white" />
+            delete Membership
+          </div>
+        </div>
       </div>
     </form>
   );
 }
 
-
-export default AddMembership
+export default AddMembership;

@@ -1,17 +1,10 @@
 import React, { useEffect } from "react";
-import { TiArrowSortedDown } from "react-icons/ti";
 import { BiSearchAlt2 } from "react-icons/bi";
-import { MdVisibility } from "react-icons/md";
 import { FiEdit } from "react-icons/fi";
-import { MdDeleteSweep } from "react-icons/md";
 
 import { IoAddCircleOutline } from "react-icons/io5";
 import { useState } from "react";
-import { getListUser } from "../hooks/useUserData";
-import { useRecoilState } from "recoil";
-import { modalState, modalTypeState } from "../atoms/modalAtom";
-import { getDataState } from "../atoms/postAtom";
-import AddUser from "./AddUser";
+
 import useAuth from "../hooks/useAuth";
 import AddMembership from "./AddMembership";
 import { useNavigate } from "react-router-dom";
@@ -21,8 +14,28 @@ function MembershipLevels() {
   const [addNewUser, setAddNewUser] = useState(false);
   const { config } = useAuth();
 
-  const [userList, setUserList] = useState(Object.keys(config.pricingPlan));
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!config) {
+      navigate("/", { replace: true });
+    }
+  }, [config]);
+  const [userList, setUserList] = useState(
+    config && Object.keys(config.pricingPlan)
+  );
+
+  useEffect(() => {
+    if(config){
+      setUserList(Object.keys(config.pricingPlan));
+    }
+  },);
+
   const [user, setUser] = useState(null);
+
+  if (!config) {
+    return <div>Loading...</div>;
+  }
 
   const searchUser = (search) => {
     const searchResult = Object.keys(config.pricingPlan).filter(
@@ -32,33 +45,6 @@ function MembershipLevels() {
     );
     setUserList(searchResult);
   };
-  const membershipSetter = (planType) => {
-    if (planType === null) {
-      setUserList(userData);
-    } else {
-      const filterResult = userData.filter(
-        (user) =>
-          user.planType &&
-          user.planType
-            .toLocaleLowerCase()
-            .startsWith(planType.toLocaleLowerCase())
-      );
-
-      setUserList(filterResult);
-    }
-  };
-  const navigate = useNavigate();
-  useEffect(() => {
-    if(!config){
-      navigate("/", { replace: true });
-    }
-    
-  }, );
-  
-  if(!config){
-    return <div>Loading...</div>;
-  }
-
 
   if (addNewUser && user) {
     return (
@@ -152,14 +138,14 @@ function MembershipLevels() {
                     return (
                       <tr className="border-b " key={index}>
                         <td className="font-medium text-gray-700  px-6 py-4 whitespace-nowrap ">
-                          {config.pricingPlan[membership].name}
+                          {config?.pricingPlan[membership].name}
                         </td>
                         <td className="font-medium text-gray-700  px-6 py-4 whitespace-nowrap">
-                          {config.pricingPlan[membership].monthlyPrice}
+                          {config?.pricingPlan[membership].monthlyPrice}
                         </td>
 
                         <td className="font-medium  text-gray-900  px-6 py-4 whitespace-nowrap">
-                          {config.pricingPlan[membership].yearlyPrice}
+                          {config?.pricingPlan[membership].yearlyPrice}
                         </td>
 
                         <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">

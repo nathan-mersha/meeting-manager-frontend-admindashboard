@@ -20,6 +20,8 @@ function SystemConfig() {
     watch,
     formState: { errors },
   } = useForm();
+
+  
   const onSubmit = async (data) => {
     
     var xp= config;
@@ -32,23 +34,16 @@ function SystemConfig() {
   const { config } = useAuth();
 
   const [value, setValue] = useState("0");
-
+  
+  if(!config){
+    return <div>Loading...</div>;
+  }
   const handleChange = (e) => {
       
     console.log(e.target.value);
     setValue(e.target.value);
   };
-  const navigate = useNavigate();
-  useEffect(() => {
-    if(!config){
-      navigate("/", { replace: true });
-    }
-    
-  }, );
-  
-  if(!config){
-    return <div>Loading...</div>;
-  }
+
 
 
   return (

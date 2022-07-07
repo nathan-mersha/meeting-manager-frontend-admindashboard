@@ -25,6 +25,8 @@ function AddUser({ handleClose, user }) {
   const { addUser,updateUser,config } = useAuth()
 
   var country_names = countryListJs.names();
+
+  country_names.sort((a,b) => a < b? -1 : 1);
   const onSubmit = async (data) => {
     // if (login) {
     //    await signIn(data.email, data.password)
@@ -67,8 +69,12 @@ function AddUser({ handleClose, user }) {
     
 
     if(res==="done"){
-
-      alert("User added successfully");
+      if(user){
+        alert("User added successfully");
+      }
+      else{
+        alert("User info updated successfully");
+      }
       handleClose();
     }
     else{
@@ -327,9 +333,9 @@ function AddUser({ handleClose, user }) {
                   type="number"
                   defaultValue={user?.phoneNumber}
                   placeholder="Phone number..."
-                  className="px-3 py-1 focus:outline-none bg-gray-200"
+                  className="px-3 py-1 focus:outline-none bg-gray-200 w-full"
                   onChange={(e) => {}}
-                  {...register("phoneNumber", { required: true })}
+                  {...register("phoneNumber", { required: true , min: 0})}
                 />
               </div>
               {errors.phoneNumber && (
@@ -345,9 +351,9 @@ function AddUser({ handleClose, user }) {
                   type="number"
                   defaultValue={user?.countryCode}
                   placeholder="countryCode..."
-                  className="px-3 py-1 focus:outline-none bg-gray-200"
+                  className="px-3 py-1 focus:outline-none bg-gray-200 w-full"
                   onChange={(e) => {}}
-                  {...register("countryCode", { required: true })}
+                  {...register("countryCode", { required: true , min: 0})}
                 />
               </div>
               {errors.countryCode && (
