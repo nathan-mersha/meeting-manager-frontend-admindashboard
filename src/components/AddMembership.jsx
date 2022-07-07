@@ -21,6 +21,8 @@ function AddMembership({ handleClose, user }) {
   const onSubmit = async (data) => {
     var xp = config;
     if(user?.name){
+      delete xp.pricingPlan[user?.name];
+      data.name=user.name;
       xp.pricingPlan[user?.name] = data;
     }else{
       xp.pricingPlan[data?.name] = data;
