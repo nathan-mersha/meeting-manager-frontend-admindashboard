@@ -13,7 +13,6 @@ import { getDataState } from "../atoms/postAtom";
 import AddUser from "./AddUser";
 import useAuth from "../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
-import dateFormat from 'dateformat';
 import ReactTimeAgo from "react-time-ago";
 let userData = [];
 function ArrangeUser() {

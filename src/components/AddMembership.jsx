@@ -1,14 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { IoIosArrowBack } from "react-icons/io";
-import { IoCalendar } from "react-icons/io5";
-import { FaCalendarCheck } from "react-icons/fa";
-import { TiArrowSortedDown } from "react-icons/ti";
+
 import { FiSave } from "react-icons/fi";
 import { useForm } from "react-hook-form";
-import DatePicker from "react-datepicker";
-import { FaUpload } from "react-icons/fa";
+
 import "react-datepicker/dist/react-datepicker.css";
-import { useFilePicker } from "use-file-picker";
+
 import useAuth from "../hooks/useAuth";
 import { updateConfig } from "../hooks/useConfig";
 
