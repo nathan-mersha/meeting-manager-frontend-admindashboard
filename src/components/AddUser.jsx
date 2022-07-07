@@ -80,7 +80,7 @@ function AddUser({ handleClose, user }) {
   const [image, setImage] = useState(user?.profilePicture);
   const [imageLoading, setImageLoading] = useState(false);
   const [oldImage, setOldImage] = useState("");
-  const [startDate, setStartDate] = useState(user?.dob ?new Date(user?.dob.split("/")[1]+"/"+user?.dob.split("/")[0]+"/"+user?.dob.split("/")[2] ): "");  
+  const [startDate, setStartDate] = useState(user?.dob ?new Date(parseInt(user?.dob.split("/")[2]),parseInt(user?.dob.split("/")[1])-1,parseInt(user?.dob.split("/")[0])): "");  
   // const [openFileSelector, { filesContent, loading }] = useFilePicker({
   //   readAs: "DataURL",
   //   accept: "image/*",
