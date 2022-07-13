@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { AiOutlineArrowDown, AiOutlineArrowUp } from "react-icons/ai";
 import useAuth from "../hooks/useAuth";
-import { getArrangeMembershipStatus, getArrangeStatus, getArrangeUserStatus } from "../hooks/useDashboard";
+import { getArrangeMembershipStatus, } from "../hooks/useDashboard";
 import Loading from "./Loading";
 import Status from "./Status";
 
