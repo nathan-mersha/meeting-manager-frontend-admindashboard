@@ -10,6 +10,7 @@ import MembershipLevels from "../components/MembershipLevels";
 import SystemConfig from "../components/SystemConfig";
 import SystemUser from "../components/SystemUser";
 import useAuth from "../hooks/useAuth";
+import Dashboard from "../components/Dashboard";
 
 function Home() {
     const isMount=useRef();
@@ -107,7 +108,7 @@ function Home() {
     
  
      {
-      !categoryData && <div>body of home</div>
+      !categoryData && <Dashboard />
      }
  
  
