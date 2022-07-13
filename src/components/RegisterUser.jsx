@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { AiOutlineArrowDown, AiOutlineArrowUp } from "react-icons/ai";
-import { getArrangeStatus, getArrangeUserStatus } from "../hooks/useDashboard";
+import { getArrangeUserStatus } from "../hooks/useDashboard";
 import Loading from "./Loading";
 import Status from "./Status";
 
 function RegisterUser() {
-  const [meetings, setMeetings] = useState(null);
+  const [meetings, setUsers] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
   const [year, setYear] = useState("2022");
   const [month, setMonth] = useState("1");
   const [yearPer, setYearPer] = useState(0);
@@ -23,12 +22,12 @@ function RegisterUser() {
         setYearPer(100);
       } else {
         const per = (data.totalUsersYear / data.preTotalUsersYear) * 100;
-        setYearPer(100-per);
+        setYearPer(100 - per);
       }
 
       if (data.preTotalUsersYear < data.totalUsersYear) {
         setIncYear(true);
-      }else{
+      } else {
         setIncYear(false);
       }
 
@@ -36,83 +35,99 @@ function RegisterUser() {
         setMonthPer(100);
       } else {
         const per = (data.totalUsersMonth / data.preTotalUsersMonth) * 100;
-        setMonthPer(100-per);
+        setMonthPer(100 - per);
       }
 
       if (data.preTotalUsersMonth < data.totalUsersMonth) {
         setIncMonth(true);
-      }else{
+      } else {
         setIncMonth(false);
       }
-      
-      setMeetings(data);
+
+      setUsers(data);
       setLoading(false);
     };
     fetchData().catch(console.error);
   }, [year, month]);
 
   if (loading) {
-    return (
-      <Loading />
-    );
+    return <Loading />;
   }
   return (
     <div className="py-10 px-10">
       <div className="flex flex-wrap gap-2 justify-between ">
         <Status
           value={meetings && meetings.totalUsers}
-          title={"Total Meetings arranged"}
+          title={"Total Users arranged"}
         />
         <Status
           value={meetings && meetings.totalUsersChooseYear}
-          title={"Meetings arranged in"}
+          title={"Users arranged in"}
           year={year}
           setYear={setYear}
         />
 
         <Status
           value={meetings && meetings.usersByChooseMonth}
-          title={"Meetings arranged in"}
+          title={"Users arranged in"}
           month={month}
           setMonth={setMonth}
         />
       </div>
 
-<div className="flex items-center justify-between">
-<div className="flex w-150 h-150 justify-between gap-x-4 mt-10">
-        <div className="flex items-center justify-between bg-gray-200 rounded-md p-3">
-          <div className="flex h-full flex-col items-center justify-between p-5">
-            <h4 className="text-xl font-bold">
-              {meetings && meetings.totalUsersYear}
-            </h4>
-            <p className="text-md font-semibold mt-5">
-              Meetings arranged this year so far
+      <div className="flex items-center justify-between">
+        <div className="flex w-150 h-150 justify-between gap-x-4 mt-10">
+          <div className="flex items-center justify-between bg-gray-200 rounded-md p-3">
+            <div className="flex h-full flex-col items-center justify-between p-5">
+              <h4 className="text-xl font-bold">
+                {meetings && meetings.totalUsersYear}
+              </h4>
+              <p className="text-md font-semibold mt-5">
+                Users arranged this year so far
+              </p>
+            </div>
+            {incYear ? (
+              <AiOutlineArrowUp className="text-green-600 w-10 h-10" />
+            ) : (
+              <AiOutlineArrowDown className="text-red-600 w-10 h-10" />
+            )}
+
+            <p
+              className={`${
+                incYear ? "text-green-600" : "text-red-600"
+              } text-lg`}
+            >
+              {yearPer}%
             </p>
           </div>
-          {incYear ? <AiOutlineArrowUp className="text-green-600 w-10 h-10"/> : <AiOutlineArrowDown className="text-red-600 w-10 h-10" />}
-
-          <p className={`${incYear ?"text-green-600" :"text-red-600"} text-lg`}>{yearPer}%</p>
         </div>
-      </div>
 
-      <div className="flex w-150 h-150 justify-between gap-x-4 mt-10">
-        <div className="flex items-center justify-between bg-gray-200 rounded-md p-3">
-          <div className="flex h-full flex-col items-center justify-between p-5">
-            <h4 className="text-xl font-bold">
-              {meetings && meetings.totalUsersMonth}
-            </h4>
-            <p className="text-md font-semibold mt-5">
-              Meetings arranged this month so far
+        <div className="flex w-150 h-150 justify-between gap-x-4 mt-10">
+          <div className="flex items-center justify-between bg-gray-200 rounded-md p-3">
+            <div className="flex h-full flex-col items-center justify-between p-5">
+              <h4 className="text-xl font-bold">
+                {meetings && meetings.totalUsersMonth}
+              </h4>
+              <p className="text-md font-semibold mt-5">
+                Users arranged this month so far
+              </p>
+            </div>
+            {incMonth ? (
+              <AiOutlineArrowUp className="text-green-600 w-10 h-10" />
+            ) : (
+              <AiOutlineArrowDown className="text-red-600 w-10 h-10" />
+            )}
+
+            <p
+              className={`${
+                incMonth ? "text-green-600" : "text-red-600"
+              } text-lg`}
+            >
+              {monthPer}%
             </p>
           </div>
-          {incMonth ? <AiOutlineArrowUp className="text-green-600 w-10 h-10"/> : <AiOutlineArrowDown className="text-red-600 w-10 h-10" />}
-
-          <p className={`${incMonth ?"text-green-600" :"text-red-600"} text-lg`}>{monthPer}%</p>
         </div>
       </div>
-</div>
-
-
     </div>
   );
 }

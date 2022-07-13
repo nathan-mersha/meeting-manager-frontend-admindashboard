@@ -6,7 +6,7 @@ import Loading from "./Loading";
 import Status from "./Status";
 
 function Membership() {
-  const [meetings, setMeetings] = useState(null);
+  const [meetings, setMemberships] = useState(null);
   const [loading, setLoading] = useState(false);
   const { config } = useAuth();
   const [pricingPlan, setPricingPlan] = useState(
@@ -17,7 +17,7 @@ function Membership() {
     const fetchData = async () => {
       setLoading(true);
       const data = await getArrangeMembershipStatus();
-      setMeetings(data);
+      setMemberships(data);
       setLoading(false);
     };
     fetchData().catch(console.error);
