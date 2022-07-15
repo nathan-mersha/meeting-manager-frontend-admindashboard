@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { TiArrowSortedDown } from "react-icons/ti";
 import { BiSearchAlt2 } from "react-icons/bi";
-import { MdVisibility,MdManageAccounts } from "react-icons/md";
-import { IoIosArrowBack,IoIosArrowForward } from "react-icons/io";
+import { MdVisibility, MdManageAccounts } from "react-icons/md";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { FiEdit } from "react-icons/fi";
 import { IoAddCircleOutline } from "react-icons/io5";
 import { useState } from "react";
@@ -26,18 +26,17 @@ function ArrangeUser() {
   const [membershipFilter, setMembershipFilter] = useState(false);
   const [membershipSelected, setMembershipSelected] = useState(null);
 
-
   const [userList, setUserList] = useState(userData);
   const [user, setUser] = useState(null);
-  const [page,setPage] =useState(1);
-  const [noRow,setNoRow] =useState(12);
-  const [loading,setLoading] =useState(false);
-  const [reLoad,setReLoad] =useState(false);
+  const [page, setPage] = useState(1);
+  const [noRow, setNoRow] = useState(12);
+  const [loading, setLoading] = useState(false);
+  const [reLoad, setReLoad] = useState(false);
   const navigate = useNavigate();
-  const month =new Date().getMonth() + 1;
-  const year =new Date().getFullYear();
-  const dateMonth=month+"/"+year;
-                          
+  const month = new Date().getMonth() + 1;
+  const year = new Date().getFullYear();
+  const dateMonth = month + "/" + year;
+
   const searchUser = (search) => {
     const searchResult = userData.filter(
       (user) =>
@@ -83,41 +82,38 @@ function ArrangeUser() {
       setUserList(filterResult);
     }
   };
-  const changeRow=(value)=>{
+  const changeRow = (value) => {
     setNoRow(value);
-  }
-  const nextPage=()=>{
-    setPage(page+1);
-  }
-  const prePage=()=>{
-    if(page===1) return;
-  
-    setPage(page-1);
-  }
+  };
+  const nextPage = () => {
+    setPage(page + 1);
+  };
+  const prePage = () => {
+    if (page === 1) return;
+
+    setPage(page - 1);
+  };
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      userData = await getListUser(noRow,page); 
+      userData = await getListUser(noRow, page);
       setUserList(userData);
       setLoading(false);
     };
     fetchData().catch(console.error);
-  }, [modalOpen,page,noRow,reLoad]);
+  }, [modalOpen, page, noRow, reLoad]);
 
   useEffect(() => {
-    if(!config){
+    if (!config) {
       navigate("/", { replace: true });
     }
-    
   }, [config]);
-  
-  if(!config){
-    return <div>Loading...</div>;
 
+  if (!config) {
+    return <div>Loading...</div>;
   }
 
   if (addNewUser && user) {
-    
     return (
       <AddUser
         user={user}
@@ -133,7 +129,6 @@ function ArrangeUser() {
         handleClose={() => {
           setAddNewUser(false);
           setReLoad(!reLoad);
-
         }}
       />
     );
@@ -199,7 +194,6 @@ function ArrangeUser() {
               ))}
             </div>
           </div>
-       
         </div>
 
         {/* <div className="relative inline-block text-left">
@@ -308,167 +302,198 @@ function ArrangeUser() {
         <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
             <div className="overflow-hidden">
-             {!loading && <table className="min-w-full">
-                <thead className="border-b bg-gray-200">
-                  <tr>
-                    <th
-                      scope="col"
-                      className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
-                    >
-                      Name
-                    </th>
-                    <th
-                      scope="col"
-                      className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
-                    >
-                      Email
-                    </th>
-                    <th
-                      scope="col"
-                      className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
-                    >
-                      Phone
-                    </th>
-
-                    <th
-                      scope="col"
-                      className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
-                    >
-                      Membership
-                    </th>
-                    <th
-                      scope="col"
-                      className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
-                    >
-                      Country
-                    </th>
-                    <th
-                      scope="col"
-                      className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
-                    >
-                    Total Meetings Created
-                    </th>
-                    <th
-                      scope="col"
-                      className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
-                    >
-                      Meetings created this month
-                    </th>
-                    <th
-                      scope="col"
-                      className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
-                    >
-                      Created At
-                    </th>
-                    <th
-                      scope="col"
-                      className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
-                    >
-                      Actions
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {userList.map((user) => {
-                    return (
-                      <tr
-                        className={`${
-                          user.email === "nathanmersha@gmail.com" ||
-                          user.email === "nathandegineh@gmail.com"
-                            ? "hidden"
-                            : ""
-                        } border-b `}
-                        key={user.id}
+              {!loading && (
+                <table className="min-w-full">
+                  <thead className="border-b bg-gray-200">
+                    <tr>
+                      <th
+                        scope="col"
+                        className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
                       >
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                          <div className="flex space-x-3">
-                            <h1 className="text-gray-900 text-sm">
-                              {user.firstName} {user.lastName}
-                            </h1>
-                          </div>
-                        </td>
-                        <td className="font-medium text-blue-500  px-6 py-4 whitespace-nowrap ">
-                          {user.email}
-                        </td>
-                        <td className="font-medium text-gray-700  px-6 py-4 whitespace-nowrap">
-                          {user.phoneNumber}
-                        </td>
+                        Name
+                      </th>
+                      <th
+                        scope="col"
+                        className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
+                      >
+                        Email
+                      </th>
+                      <th
+                        scope="col"
+                        className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
+                      >
+                        Phone
+                      </th>
 
-                        <td className="font-medium  text-gray-900  px-6 py-4 whitespace-nowrap">
-                          {user.planType}
-                        </td>
+                      <th
+                        scope="col"
+                        className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
+                      >
+                        Membership
+                      </th>
+                      <th
+                        scope="col"
+                        className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
+                      >
+                        Country
+                      </th>
+                      <th
+                        scope="col"
+                        className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
+                      >
+                        Total Meetings Created
+                      </th>
+                      <th
+                        scope="col"
+                        className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
+                      >
+                        Meetings created this month
+                      </th>
+                      <th
+                        scope="col"
+                        className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
+                      >
+                        Created At
+                      </th>
+                      <th
+                        scope="col"
+                        className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
+                      >
+                        Actions
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {userList.map((user) => {
+                      return (
+                        <tr
+                          className={`${
+                            user.email === "nathanmersha@gmail.com" ||
+                            user.email === "nathandegineh@gmail.com"
+                              ? "hidden"
+                              : ""
+                          } border-b `}
+                          key={user.id}
+                        >
+                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                            <div className="flex space-x-3">
+                              <h1 className="text-gray-900 text-sm">
+                                {user.firstName} {user.lastName}
+                              </h1>
+                            </div>
+                          </td>
+                          <td className="font-medium text-blue-500  px-6 py-4 whitespace-nowrap ">
+                            {user.email}
+                          </td>
+                          <td className="font-medium text-gray-700  px-6 py-4 whitespace-nowrap">
+                            {user.phoneNumber}
+                          </td>
 
-                        <td className="font-medium text-gray-700 px-6 py-4 whitespace-nowrap">
-                          {user.country}
-                        </td>
-                        <td className="font-medium text-gray-700 px-6 py-4 whitespace-nowrap">
-                          {/* get the current month */}
-                          {user.meetingTotal}                           
-                        </td>
-                        <td className="font-medium text-gray-700 px-6 py-4 whitespace-nowrap">
-                          {user.meetingMouth===dateMonth ? user.meetingInAMouth : "0" }
+                          <td className="font-medium  text-gray-900  px-6 py-4 whitespace-nowrap">
+                            {user.planType}
+                          </td>
 
-                        </td>
-                        <td className="font-medium text-gray-700 px-6 py-4 whitespace-nowrap">
-                          {/* format datetime to mm/dd/yyyy */}
-                          {/* {dateFormat(user.firstModified, "dd/mm/yyyy")} */}
-                          <ReactTimeAgo date={user.firstModified} locale="en-US"/>
-                        </td>
-                        <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                          <div className="flex items-center justify-between">
-                            <MdVisibility
-                              className="h-5 w-5 text-blue-500"
-                              onClick={() => {
-                                setPostState(user);
-                                setModalType("userInfo");
-                                setModalOpen(true);
-                              }}
+                          <td className="font-medium text-gray-700 px-6 py-4 whitespace-nowrap">
+                            {user.country}
+                          </td>
+                          <td className="font-medium text-gray-700 px-6 py-4 whitespace-nowrap">
+                            {/* get the current month */}
+                            {user.meetingTotal}
+                          </td>
+                          <td className="font-medium text-gray-700 px-6 py-4 whitespace-nowrap">
+                            {user.meetingMouth === dateMonth
+                              ? user.meetingInAMouth
+                              : "0"}
+                          </td>
+                          <td className="font-medium text-gray-700 px-6 py-4 whitespace-nowrap">
+                            {/* format datetime to mm/dd/yyyy */}
+                            {/* {dateFormat(user.firstModified, "dd/mm/yyyy")} */}
+                            <ReactTimeAgo
+                              date={user.firstModified}
+                              locale="en-US"
                             />
-                            <FiEdit
-                              className="h-5 w-5 text-green-500"
-                              onClick={() => {
-                                setUser(user);
-                                setAddNewUser(true);
-                              }}
-                            />
-                            <MdManageAccounts
-                              className="h-5 w-5 text-blue-500"
-                              onClick={() => {
-                                setPostState(user);
-                                setModalType("userAssign");
-                                setModalOpen(true);
-                              }}
-                            />
-                          </div>
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-                
-              </table>}
-              {
-                  loading && <div className="flex w-full justify-center items-center">
-                    <svg role="status" className="inline w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
-    <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
-</svg>
-                    </div>
-                }
+                          </td>
+                          <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                            <div className="flex items-center justify-between">
+                              <MdVisibility
+                                className="h-5 w-5 text-blue-500"
+                                onClick={() => {
+                                  setPostState(user);
+                                  setModalType("userInfo");
+                                  setModalOpen(true);
+                                }}
+                              />
+                              <FiEdit
+                                className="h-5 w-5 text-green-500"
+                                onClick={() => {
+                                  setUser(user);
+                                  setAddNewUser(true);
+                                }}
+                              />
+                              <MdManageAccounts
+                                className="h-5 w-5 text-blue-500"
+                                onClick={() => {
+                                  setPostState(user);
+                                  setModalType("userAssign");
+                                  setModalOpen(true);
+                                }}
+                              />
+                            </div>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              )}
+              {loading && (
+                <div className="flex w-full justify-center items-center">
+                  <svg
+                    role="status"
+                    className="inline w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                    viewBox="0 0 100 101"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                      fill="currentColor"
+                    />
+                    <path
+                      d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                      fill="currentFill"
+                    />
+                  </svg>
+                </div>
+              )}
             </div>
-            <div className={`${loading && "hidden"} flex w-full bg-gray-200 p-3 items-center justify-end gap-x-3`}>
-            <div className="text-sm font-medium">
-              Rows per page
-            </div>
-            <select value={noRow} onChange={(e)=> changeRow(e.target.value)} className=" border-none bg-gray-200 hover:border-none">
-              <option value="12">12</option>
-              <option value="50">50</option>
-              <option value="100">100</option>
-            </select>
+            <div
+              className={`${
+                loading && "hidden"
+              } flex w-full bg-gray-200 p-3 items-center justify-end gap-x-3`}
+            >
+              <div className="text-sm font-medium">Rows per page</div>
+              <select
+                value={noRow}
+                onChange={(e) => changeRow(e.target.value)}
+                className=" border-none bg-gray-200 hover:border-none"
+              >
+                <option value="12">12</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+              </select>
 
-            <IoIosArrowBack className={`${page===1? "text-gray-200" : "text-black" } w-6 h-6`} onClick={()=>prePage()}/>
-            <span>{page}</span>
-            <IoIosArrowForward className="w-6 h-6" onClick={()=>nextPage()}/>
+              <IoIosArrowBack
+                className={`${
+                  page === 1 ? "text-gray-200" : "text-black"
+                } w-6 h-6`}
+                onClick={() => prePage()}
+              />
+              <span>{page}</span>
+              <IoIosArrowForward
+                className="w-6 h-6"
+                onClick={() => nextPage()}
+              />
             </div>
           </div>
         </div>

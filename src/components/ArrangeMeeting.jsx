@@ -23,7 +23,10 @@ function ArrangeMeeting() {
         setYearPer(100);
       } else {
         const per = (data.totalMeetingsYear / data.preTotalMeetingsYear) * 100;
-        setYearPer(100 - per);
+        let ans = 100 - per;
+        ans = ans < 0 ? ans * -1 : ans;
+        ans = ans.toFixed(2);
+        setYearPer(ans);
       }
 
       if (data.preTotalMeetingsYear < data.totalMeetingsYear) {
@@ -37,7 +40,10 @@ function ArrangeMeeting() {
       } else {
         const per =
           (data.totalMeetingsMonth / data.preTotalMeetingsMonth) * 100;
-        setMonthPer(100 - per);
+        let ans = 100 - per;
+        ans = ans < 0 ? ans * -1 : ans;
+        ans = ans.toFixed(2);
+        setMonthPer(ans);
       }
 
       if (data.preTotalMeetingsMonth < data.totalMeetingsMonth) {
@@ -53,9 +59,7 @@ function ArrangeMeeting() {
   }, [year, month]);
 
   if (loading) {
-    return (
-      <Loading />
-    );
+    return <Loading />;
   }
   return (
     <div className="py-10 px-10">
