@@ -22,7 +22,10 @@ function RegisterUser() {
         setYearPer(100);
       } else {
         const per = (data.totalUsersYear / data.preTotalUsersYear) * 100;
-        setYearPer(100 - per);
+        let ans = 100 - per;
+        ans = ans < 0 ? ans * -1 : ans;
+        ans = ans.toFixed(2);
+        setYearPer(ans);
       }
 
       if (data.preTotalUsersYear < data.totalUsersYear) {
@@ -35,7 +38,10 @@ function RegisterUser() {
         setMonthPer(100);
       } else {
         const per = (data.totalUsersMonth / data.preTotalUsersMonth) * 100;
-        setMonthPer(100 - per);
+        let ans = 100 - per;
+        ans = ans < 0 ? ans * -1 : ans;
+        ans = ans.toFixed(2);
+        setMonthPer(ans);
       }
 
       if (data.preTotalUsersMonth < data.totalUsersMonth) {
