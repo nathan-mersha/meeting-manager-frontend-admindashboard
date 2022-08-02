@@ -1,6 +1,6 @@
 import { fetchToken } from "../utils/fetchUser";
 
-const homeUrl = "https://mmserver.ml/";
+const homeUrl = "https://arrangeserver.xyz";
 
 export const  getConfig= async ()=>{
   

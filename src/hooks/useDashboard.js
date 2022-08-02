@@ -1,5 +1,5 @@
 import { fetchToken } from "../utils/fetchUser";
-const homeUrl = "https://mmserver.ml/";
+const homeUrl = "https://arrangeserver.xyz/";
 
 export const getArrangeStatus = async (year = 2022, month=1) => {
     const requestOptions = {

@@ -14,7 +14,7 @@ const AuthContext = createContext({
 
 export const AuthProvider = ({ children }) => {
   //   const router = useRouter()
-  const homeUrl = "https://mmserver.ml/";
+  const homeUrl = "https://arrangeserver.xyz/";
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
