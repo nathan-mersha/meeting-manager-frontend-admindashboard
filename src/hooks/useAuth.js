@@ -11,7 +11,6 @@ const AuthContext = createContext({
   error: null,
   loading: false,
 });
-
 export const AuthProvider = ({ children }) => {
   //   const router = useRouter()
   const homeUrl = "https://arrangeserver.xyz/";
